@@ -1,9 +1,11 @@
 package com.example.alba.busessevilla;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.view.View;
 
 public class MainActivity extends Activity {
 
@@ -28,4 +30,10 @@ public class MainActivity extends Activity {
         trayectoSpinner.setAdapter(adapterTrayecto);
         paradaSpinner.setAdapter(adapterParada);
    }
+
+    public void btnClicked(View view){
+        Intent myIntent;
+        myIntent = new Intent(getApplicationContext(), Main2Activity.class);
+        startActivity(myIntent);
+    }
 }
