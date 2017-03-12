@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.alba.busessevilla.MainActivity"
+    style="@style/AppTheme">
+
+    <Spinner
+        android:id="@+id/lineaSpinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/trayectoSpinner"
+        android:layout_alignStart="@+id/trayectoSpinner"
+        android:layout_below="@+id/lineaTextView"
+        android:layout_marginTop="20dp"
+        tools:layout_editor_absoluteX="135dp"
+        tools:layout_editor_absoluteY="61dp" />
+
+    <Spinner
+        android:id="@+id/trayectoSpinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:layout_editor_absoluteY="142dp"
+        tools:layout_editor_absoluteX="8dp"
+        android:layout_below="@+id/trayectoTextView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="22dp" />
+
+    <Spinner
+        android:id="@+id/paradaSpinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:layout_editor_absoluteY="226dp"
+        tools:layout_editor_absoluteX="8dp"
+        android:layout_below="@+id/paradaTextView"
+        android:layout_alignLeft="@+id/trayectoSpinner"
+        android:layout_alignStart="@+id/trayectoSpinner"
+        android:layout_marginTop="20dp" />
+
+    <Button
+        android:id="@+id/irButton"
+        style="@android:style/Widget.Button.Inset"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/paradaSpinner"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="57dp"
+        android:text="Ir"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <TextView
+        android:id="@+id/lineaTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"
+        android:text="Seleccione la línea del autobús:"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/trayectoTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/lineaSpinner"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="38dp"
+        android:text="Seleccione el sentido del trayecto:"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/paradaTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/trayectoSpinner"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="39dp"
+        android:text="Seleccione la parada en la que se encuentra:"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="16sp" />
+</RelativeLayout>
