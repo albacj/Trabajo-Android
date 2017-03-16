@@ -15,8 +15,8 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
         String[] lineas = {"M160", "M161", "M162", "M169"};
-        String [] trayectos = {"Sevilla - Pueblo", "Pueblo - Sevilla"};
-        String [] paradas = {"Pinichi", "Alambique", "Iglesia", "Blanca Paloma"};
+        String[] trayectos = {"Sevilla - Pueblo", "Pueblo - Sevilla"};
+        String[] paradas = {"Pinichi", "Alambique", "Iglesia", "Blanca Paloma"};
 
         ArrayAdapter adapterLinea = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, lineas);
         ArrayAdapter adapterTrayecto = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, trayectos);
