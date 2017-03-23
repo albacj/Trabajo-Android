@@ -29,6 +29,9 @@ public class MainActivity extends Activity {
         puebloSpinner.setAdapter(adapterPueblo);
         trayectoSpinner.setAdapter(adapterTrayecto);
         paradaSpinner.setAdapter(adapterParada);
+
+        //Intents, para llevar los parámetros a la actividad 2
+
    }
 
     public void btnClicked(View view){
