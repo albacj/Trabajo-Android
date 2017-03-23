@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_marginTop="66dp"
-        android:text="Bienvenido/a a la aplicación Buses Sevilla. \n Aquí podrá consular los horarios de cualquier línea de autobús de la provincia de Sevilla."
+        android:text="Bienvenido/a a la aplicación Buses Sevilla. \n Aquí podrá consultar los horarios de cualquier línea de autobús de la provincia de Sevilla."
         android:textAlignment="center"
         android:textColor="@android:color/white"
         android:textSize="18sp" />

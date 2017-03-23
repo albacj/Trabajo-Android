@@ -14,19 +14,19 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        String[] lineas = {"M160", "M161", "M162", "M169"};
+        String[] pueblos = {"Pilas", "Aznalcázar", "Bollullos", "Bormujos"};
         String[] trayectos = {"Sevilla - Pueblo", "Pueblo - Sevilla"};
         String[] paradas = {"Pinichi", "Alambique", "Iglesia", "Blanca Paloma"};
 
-        ArrayAdapter adapterLinea = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, lineas);
+        ArrayAdapter adapterPueblo = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, pueblos);
         ArrayAdapter adapterTrayecto = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, trayectos);
         ArrayAdapter adapterParada = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, paradas);
 
-        Spinner lineaSpinner = (Spinner)findViewById(R.id.lineaSpinner);
+        Spinner puebloSpinner = (Spinner)findViewById(R.id.puebloSpinner);
         Spinner trayectoSpinner = (Spinner)findViewById(R.id.trayectoSpinner);
         Spinner paradaSpinner = (Spinner)findViewById(R.id.paradaSpinner);
 
-        lineaSpinner.setAdapter(adapterLinea);
+        puebloSpinner.setAdapter(adapterPueblo);
         trayectoSpinner.setAdapter(adapterTrayecto);
         paradaSpinner.setAdapter(adapterParada);
    }
