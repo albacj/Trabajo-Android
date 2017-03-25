@@ -25,10 +25,10 @@
         android:layout_height="wrap_content"
         tools:layout_editor_absoluteY="142dp"
         tools:layout_editor_absoluteX="8dp"
-        android:layout_marginTop="22dp"
+        android:layout_marginTop="23dp"
         android:layout_below="@+id/trayectoTextView"
-        android:layout_alignLeft="@+id/puebloSpinner"
-        android:layout_alignStart="@+id/puebloSpinner" />
+        android:layout_alignLeft="@+id/paradaSpinner"
+        android:layout_alignStart="@+id/paradaSpinner" />
 
     <Spinner
         android:id="@+id/paradaSpinner"
@@ -45,7 +45,7 @@
         style="@android:style/Widget.Button.Inset"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="55dp"
+        android:layout_marginTop="54dp"
         android:text="Ir"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="24sp"
@@ -60,12 +60,16 @@
         android:id="@+id/lineaTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="17dp"
-        android:text="Seleccione la línea del autobús:"
-        android:textColor="@color/colorPrimaryDark"
-        android:textSize="16sp"
+        android:layout_alignEnd="@+id/paradaTextView"
+        android:layout_alignLeft="@+id/paradaTextView"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignRight="@+id/paradaTextView"
+        android:layout_alignStart="@+id/paradaTextView"
+        android:layout_marginTop="17dp"
+        android:text="Seleccione el pueblo en donde se encuentra o al que quiere ir:"
+        android:textAlignment="center"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="16sp" />
 
     <TextView
         android:id="@+id/trayectoTextView"

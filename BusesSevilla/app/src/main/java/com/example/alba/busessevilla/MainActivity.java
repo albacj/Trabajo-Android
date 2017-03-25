@@ -3,9 +3,12 @@ package com.example.alba.busessevilla;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.view.View;
+
+import java.text.BreakIterator;
 
 public class MainActivity extends Activity {
 
@@ -35,7 +38,11 @@ public class MainActivity extends Activity {
 
     public void btnClicked(View view){
         Intent myIntent;
+
         myIntent = new Intent(getApplicationContext(), Main2Activity.class);
+        myIntent.putExtra("pueblo", puebloSpinner.getSelectedItem().toString());
+        myIntent.putExtra("sentido", trayectoSpinner.getSelectedItem().toString());
+        myIntent.putExtra("parada", paradaSpinner.getSelectedItem().toString());
 
         startActivity(myIntent);
     }
