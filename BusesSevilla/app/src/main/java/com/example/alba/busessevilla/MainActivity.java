@@ -9,6 +9,8 @@ import android.view.View;
 
 public class MainActivity extends Activity {
 
+    private Spinner puebloSpinner, trayectoSpinner, paradaSpinner;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,21 +24,19 @@ public class MainActivity extends Activity {
         ArrayAdapter adapterTrayecto = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, trayectos);
         ArrayAdapter adapterParada = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, paradas);
 
-        Spinner puebloSpinner = (Spinner)findViewById(R.id.puebloSpinner);
-        Spinner trayectoSpinner = (Spinner)findViewById(R.id.trayectoSpinner);
-        Spinner paradaSpinner = (Spinner)findViewById(R.id.paradaSpinner);
+        puebloSpinner = (Spinner)findViewById(R.id.puebloSpinner);
+        trayectoSpinner = (Spinner)findViewById(R.id.trayectoSpinner);
+        paradaSpinner = (Spinner)findViewById(R.id.paradaSpinner);
 
         puebloSpinner.setAdapter(adapterPueblo);
         trayectoSpinner.setAdapter(adapterTrayecto);
         paradaSpinner.setAdapter(adapterParada);
-
-        //Intents, para llevar los parámetros a la actividad 2
-
    }
 
     public void btnClicked(View view){
         Intent myIntent;
         myIntent = new Intent(getApplicationContext(), Main2Activity.class);
+
         startActivity(myIntent);
     }
 }
