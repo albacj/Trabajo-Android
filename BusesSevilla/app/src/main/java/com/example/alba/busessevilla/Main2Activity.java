@@ -6,25 +6,25 @@ import android.widget.TextView;
 
 public class Main2Activity extends Activity {
 
-    private TextView puebloTextView;
-    private TextView trayectoTextView;
+    private TextView puebloOrigenTextView;
     private TextView paradaTextView;
+    private TextView puebloDestinoTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
 
-        puebloTextView = (TextView)findViewById(R.id.puebloDatoTextView);
-        trayectoTextView = (TextView)findViewById(R.id.trayectoDatoTextView);
-        paradaTextView = (TextView)findViewById(R.id.paradaDatoTextView);
+        puebloOrigenTextView = (TextView)findViewById(R.id.puebloDatoOrigenTextView);
+        paradaTextView = (TextView)findViewById(R.id.puebloDatoDestinoTextView);
+        puebloDestinoTextView = (TextView)findViewById(R.id.paradaDatoTextView);
 
-        String puebloDato = getIntent().getStringExtra("pueblo");
-        String trayectoDato = getIntent().getStringExtra("sentido");
+        String puebloOrigenDato = getIntent().getStringExtra("puebloOrigen");
         String paradaDato = getIntent().getStringExtra("parada");
+        String puebloDestinoDato = getIntent().getStringExtra("puebloDestino");
 
-        puebloTextView.setText(puebloDato);
-        trayectoTextView.setText(trayectoDato);
+        puebloOrigenTextView.setText(puebloOrigenDato);
         paradaTextView.setText(paradaDato);
+        puebloDestinoTextView.setText(puebloDestinoDato);
     }
 }

@@ -10,7 +10,7 @@
     style="@style/AppTheme">
 
     <Spinner
-        android:id="@+id/puebloSpinner"
+        android:id="@+id/puebloOrigenSpinner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="21dp"
@@ -20,18 +20,17 @@
         android:layout_centerHorizontal="true" />
 
     <Spinner
-        android:id="@+id/trayectoSpinner"
+        android:id="@+id/paradaSpinner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:layout_editor_absoluteY="142dp"
         tools:layout_editor_absoluteX="8dp"
         android:layout_marginTop="23dp"
         android:layout_below="@+id/trayectoTextView"
-        android:layout_alignLeft="@+id/paradaSpinner"
-        android:layout_alignStart="@+id/paradaSpinner" />
+        android:layout_centerHorizontal="true" />
 
     <Spinner
-        android:id="@+id/paradaSpinner"
+        android:id="@+id/puebloDestinoSpinner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:layout_editor_absoluteY="226dp"
@@ -45,7 +44,7 @@
         style="@android:style/Widget.Button.Inset"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="54dp"
+        android:layout_marginTop="46dp"
         android:text="Ir"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="24sp"
@@ -53,7 +52,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         android:onClick="btnClicked"
-        android:layout_below="@+id/paradaSpinner"
+        android:layout_below="@+id/puebloDestinoSpinner"
         android:layout_centerHorizontal="true" />
 
     <TextView
@@ -66,7 +65,7 @@
         android:layout_alignRight="@+id/paradaTextView"
         android:layout_alignStart="@+id/paradaTextView"
         android:layout_marginTop="17dp"
-        android:text="Seleccione el pueblo en donde se encuentra o al que quiere ir:"
+        android:text="Seleccione la localidad de origen:"
         android:textAlignment="center"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="16sp" />
@@ -75,10 +74,10 @@
         android:id="@+id/trayectoTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/puebloSpinner"
+        android:layout_below="@+id/puebloOrigenSpinner"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="38dp"
-        android:text="Seleccione el sentido del trayecto:"
+        android:text="Seleccione la parada en la que se encuentra:"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="16sp" />
 
@@ -86,10 +85,10 @@
         android:id="@+id/paradaTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/trayectoSpinner"
+        android:layout_below="@+id/paradaSpinner"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="39dp"
-        android:text="Seleccione la parada en la que se encuentra:"
+        android:text="Seleccione la localidad de destino:"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="16sp" />
 </RelativeLayout>
