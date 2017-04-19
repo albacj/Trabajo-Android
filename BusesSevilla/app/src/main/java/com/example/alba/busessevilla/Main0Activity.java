@@ -15,7 +15,7 @@ public class Main0Activity extends Activity {
 
     public void btnWelcomeClicked(View view){
         Intent myIntent;
-        myIntent = new Intent(getApplicationContext(), MainActivity.class);
+        myIntent = new Intent(getApplicationContext(), MainActivity1.class);
         startActivity(myIntent);
     }
 }
