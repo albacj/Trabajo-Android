@@ -21,11 +21,14 @@ public class MainActivity2 extends Activity {
         datos.add(new Lista_entrada2(15));
 
         ListView lista = (ListView) findViewById(R.id.tiempoListView);
-        lista.setAdapter(new Lista_adaptador2(this, R.layout.entrada, datos){
+
+        lista.setAdapter(new Lista_adaptador2(this, R.layout.entrada2, datos){
             @Override
             public void onEntrada(Object entrada, View view) {
                 TextView texto_superior_entrada = (TextView) view.findViewById(R.id.tiempoTextView);
-                texto_superior_entrada.setText(((Lista_entrada2) entrada).getTextoTiempo());
+                //texto_superior_entrada.setText("hola");
+                int tmp =((Lista_entrada2) entrada).getTextoTiempo();
+                texto_superior_entrada.setText(tmp + " minutos");
             }
         });
     }
