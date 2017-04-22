@@ -37,9 +37,9 @@ public class MainActivity1 extends Activity {
 
     private Spinner puebloSpinner;
     String url;
-    String opcion;
     JSONObject jObj = new JSONObject();
     String [] lista_municipios;
+    ArrayList<Lista_entrada> lista_lineas = new ArrayList<Lista_entrada>();
     Map<String, String> mapa_municipios = new HashMap<String, String>();
     Map<String, String> mapa_lineas = new HashMap<String, String>();
 
@@ -49,47 +49,12 @@ public class MainActivity1 extends Activity {
 
         setContentView(R.layout.activity_main1);
         url = "http://api.ctan.es/v1/Consorcios/1/municipios";
-        opcion = "municipios";
-        new Parseo().execute();
+        new ParseoMunicipio().execute();
 
         //String[] pueblos = {"Villamanrique","Pilas","Aznalcázar","Bollullos de la Mitación","Bormujos","Castilleja de la Cuesta","Sevilla"};
-
-        ArrayList<Lista_entrada> datos = new ArrayList<Lista_entrada>();
-
-        datos.add(new Lista_entrada("M-120", "Bollullos de la Mitación"));
-        datos.add(new Lista_entrada("M-163", "Camas"));
-        datos.add(new Lista_entrada("M-142B", "Palomares del Río"));
-        datos.add(new Lista_entrada("M-169", "Villamanrique"));
-
-        ListView lista = (ListView) findViewById(R.id.lineasListView);
-        lista.setAdapter(new Lista_adaptador(this, R.layout.entrada, datos){
-            @Override
-            public void onEntrada(Object entrada, View view) {
-                TextView texto_superior_entrada = (TextView) view.findViewById(R.id.busTextView);
-                texto_superior_entrada.setText(((Lista_entrada) entrada).getTextoNumLinea());
-
-                TextView texto_inferior_entrada = (TextView) view.findViewById(R.id.busPuebloTextView);
-                texto_inferior_entrada.setText(((Lista_entrada) entrada).getTextoPuebloLinea());
-            }
-        });
-
-        //Selecciona un ítem y lleva a la activity2 con el tiempo que queda para que pase el autobús
-
-        lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                        // Abre una nueva Activity:
-                        Intent myIntent = new Intent(view.getContext(), MainActivity2.class);
-                        startActivity(myIntent);
-
-                    }
-                }
-        );
-
     }
 
-    private void recargarListaMunicipios (){
+    private void cargarListaMunicipios (){
         String tag = "Parseo";
         JSONArray municipios = new JSONArray();
         try{
@@ -116,83 +81,67 @@ public class MainActivity1 extends Activity {
         ArrayAdapter adapterPueblo = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, lista_municipios);
         puebloSpinner = (Spinner)findViewById(R.id.puebloSpinner);
         puebloSpinner.setAdapter(adapterPueblo);
-    }
 
-    /*private void cargarListaLineas(){
-        String tag = "Parseo";
-        puebloSpinner = (Spinner)findViewById(R.id.puebloSpinner);
-        String seleccionado = puebloSpinner.getSelectedItem().toString();
-        //String seleccionado = "SEVILLA";
-        url = "http://api.ctan.es/v1/Consorcios/1/municipios/";
-        String id = mapa_municipios.get(seleccionado);
-        opcion = "nucleos";
-        if (id!= null){
-            url = url.concat(id + "/nucleos");
-            new Parseo().execute();
-        } else {
-            Log.e(tag, "Municipio seleccionado incorrecto.");
-        }
-    }
-
-    private void recargarListaLineas(){
-        String tag = "Parseo";
-        JSONArray nucleos = new JSONArray();
-        List<String> id_municipios = null;
-        try{
-            nucleos = jObj.getJSONArray("nucleos");
-        } catch (Exception e){
-            Log.e(tag, "Error al generar núcleos: " + e.getMessage());
-        }
-        if (nucleos!= null) {
-            for (int i = 0; i < nucleos.length(); i++) {
-                try {
-                    JSONObject obj = nucleos.getJSONObject(i);
-                    id_municipios.add(obj.getString("idNucleo"));
-                } catch (Exception e) {
-                    Log.e(tag, "Error al leer el JSON" + e);
+        puebloSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
+            @Override
+            public void onItemSelected(AdapterView<?> adapter, View view,
+                                       int position, long id) {
+                url = "http://api.ctan.es/v1/Consorcios/1/municipios/";
+                String tag = "Parseo";
+                String seleccionado = mapa_municipios.get(puebloSpinner.getSelectedItem());
+                if (seleccionado!= null){
+                    url = url.concat(seleccionado + "/nucleos");
+                    new ParseoLinea().execute();
+                } else {
+                    Log.e(tag, "Municipio seleccionado incorrecto.");
                 }
+
+
             }
-            Log.e(tag, "Contenido lista: " + id_municipios);
-            parsearLineas(id_municipios.iterator(), tag);
-        } else {
-            Log.e(tag, "Error al acceder a la página.");
-        }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
     }
 
-    private void parsearLineas(Iterator<String> id, String tag)
-    {
-        JSONArray lineas = new JSONArray();
-        while (id.hasNext()){
-            String siguiente = id.next();
-            url = "http://api.ctan.es/v1/Consorcios/1/nucleos/" + siguiente +"/lineas";
-            new Parseo().execute();
-            try{
-                lineas = jObj.getJSONArray("lineas");
-            } catch (Exception e){
-                Log.e(tag, "Error al generar líneas: " + e.getMessage());
-            }
-            if (lineas!= null) {
-                for (int i = 0; i < lineas.length(); i++) {
-                    try {
-                        JSONObject obj = lineas.getJSONObject(i);
-                        if (obj.getString("modo").equals("Bus")){
-                            String id_linea = obj.getString("idLinea");
-                            String linea = obj.getString("nombre");
-                            mapa_lineas.put(id_linea,linea);
-                        }
-                    } catch (Exception e) {
-                        Log.e(tag, "Error al leer el JSON" + e);
-                    }
-                }
-                Log.e(tag, "Contenido mapa: " + mapa_lineas);
-            } else {
-                Log.e(tag, "Error al acceder a la página.");
-            }
+    private void cargarListaLineas(){
 
-        }
-    }*/
+        /*datos.add(new Lista_entrada("M-120", "Bollullos de la Mitación"));
+        datos.add(new Lista_entrada("M-163", "Camas"));
+        datos.add(new Lista_entrada("M-142B", "Palomares del Río"));
+        datos.add(new Lista_entrada("M-169", "Villamanrique"));*/
 
-    private class Parseo extends AsyncTask<Void, Void, Void> {
+        String tag = "Parseo";
+        ListView lista = (ListView) findViewById(R.id.lineasListView);
+        lista.setAdapter(new Lista_adaptador(this, R.layout.entrada, lista_lineas){
+            @Override
+            public void onEntrada(Object entrada, View view) {
+                TextView texto_superior_entrada = (TextView) view.findViewById(R.id.busTextView);
+                texto_superior_entrada.setText(((Lista_entrada) entrada).getTextoNumLinea());
+
+                TextView texto_inferior_entrada = (TextView) view.findViewById(R.id.busPuebloTextView);
+                texto_inferior_entrada.setText(((Lista_entrada) entrada).getTextoPuebloLinea());
+            }
+        });
+        Log.e(tag, "Selector generado: " + lista_lineas);
+
+        //Selecciona un ítem y lleva a la activity2 con el tiempo que queda para que pase el autobús
+
+        lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                         @Override
+                                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                                             // Abre una nueva Activity:
+                                             Intent myIntent = new Intent(view.getContext(), MainActivity2.class);
+                                             startActivity(myIntent);
+
+                                         }
+                                     }
+        );
+    }
+
+    private class ParseoMunicipio extends AsyncTask<Void, Void, Void> {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -222,10 +171,95 @@ public class MainActivity1 extends Activity {
         protected void onPostExecute(Void result) {
             //Toast.makeText(MainActivity1.this, "Descargado.", Toast.LENGTH_LONG).show();
             super.onPostExecute(result);
-            switch (opcion){
-                case "municipios":  recargarListaMunicipios();
-                //case "nucleos":  recargarListaLineas();
+            cargarListaMunicipios();
+        }
+    }
+
+    private class ParseoLinea extends AsyncTask<Void, Void, Void> {
+        List<String> id_municipios = new ArrayList();
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            //Toast.makeText(MainActivity1.this, "Espere, por favor.", Toast.LENGTH_LONG).show();
+        }
+
+        @Override
+        protected Void doInBackground(Void... arg0) {
+            String tag = "Parseo";
+            String jsonStr = "";
+            lista_lineas.clear();
+            JSONArray nucleos = new JSONArray();
+            try {
+                jsonStr = clienteHttp(url);
+                Log.e(tag, "Respuesta de " + url);
+            } catch (Exception e) {
+                Log.e(tag, "No hubo respuesta de " + url);
             }
+            if (jsonStr != null) {
+                try {
+                    jObj = new JSONObject(jsonStr);
+                    nucleos = jObj.getJSONArray("nucleos");
+                    JSONArray lineas = new JSONArray();
+                    if (nucleos!= null) {
+                        for (int i = 0; i < nucleos.length(); i++) {
+                            try {
+                                JSONObject obj = nucleos.getJSONObject(i);
+                                String siguiente = (obj.getString("idNucleo"));
+                                url = "http://api.ctan.es/v1/Consorcios/1/nucleos/" + siguiente +"/lineas";
+                            } catch (Exception e) {
+                                Log.e(tag, "Error al leer el JSON" + e);
+                            }
+                            try {
+                                jsonStr = clienteHttp(url);
+                                Log.e(tag, "Respuesta de " + url);
+                                if (jsonStr != null) {
+                                    try {
+                                        JSONObject jObj = new JSONObject(jsonStr);
+                                        lineas = jObj.getJSONArray("lineas");
+                                    } catch (Exception e) {
+                                        Log.e(tag, "Error al generar líneas: " + e.getMessage());
+                                    }
+                                }
+                            } catch (Exception e) {
+                                    Log.e(tag, "No hubo respuesta de " + url);
+                            }
+                        }
+                        if (lineas!= null) {
+                            for (int i = 0; i < lineas.length(); i++) {
+                                try {
+                                    JSONObject obj = lineas.getJSONObject(i);
+                                    if (obj.getString("modo").equals("Bus")){
+                                        String id_linea = obj.getString("idLinea");
+                                        String linea = obj.getString("nombre");
+                                        String nombre = "";
+                                        String[] partes = linea.split(" ");
+                                        String cod_linea = partes[0];
+                                        for(int j=1;j<partes.length;j++) {
+                                            nombre = nombre.concat(partes[j] + " ");
+                                        }
+                                        mapa_lineas.put(id_linea,linea);
+                                        lista_lineas.add(new Lista_entrada(cod_linea,nombre));
+                                    }
+                                } catch (Exception e) {
+                                    Log.e(tag, "Error al leer el JSON" + e);
+                                }
+                            }
+                        } else {
+                            Log.e(tag, "Error al acceder a la página.");
+                        }
+                        Log.e(tag, "Contenido lista: " + id_municipios);
+                        Log.e(tag, "Contenido mapa: " + mapa_lineas);}
+                } catch (final JSONException e) {
+                    Log.e(tag, "Error al parsear: " + e.getMessage());
+                }
+            }
+            return null;
+        }
+        @Override
+        protected void onPostExecute(Void result) {
+            Toast.makeText(MainActivity1.this, "Descargado.", Toast.LENGTH_LONG).show();
+            super.onPostExecute(result);
+            cargarListaLineas();
         }
     }
 
