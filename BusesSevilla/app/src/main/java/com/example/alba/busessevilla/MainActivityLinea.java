@@ -1,6 +1,8 @@
 package com.example.alba.busessevilla;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -34,11 +36,12 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public class MainActivityLinea extends Activity {
 
     String id_linea;
-    int seleccion;
+    String seleccion;
     JSONObject datos_linea;
     JSONObject datos_paradas;
     JSONArray noticias;
@@ -46,7 +49,8 @@ public class MainActivityLinea extends Activity {
     Map<String,ArrayList> vuelta = new HashMap<String,ArrayList>();
     List<String> paradas_ida = new ArrayList<String>();
     List<String> paradas_vuelta = new ArrayList<String>();
-    List<Bitmap> bmp = new ArrayList<Bitmap>();
+    Map<String,Bitmap> bmp = new HashMap<String,Bitmap>();
+    ArrayAdapter adapterParadas;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +58,8 @@ public class MainActivityLinea extends Activity {
         setContentView(R.layout.activity_main_linea);
         Intent actlinea = getIntent();
         id_linea = actlinea.getStringExtra("id_linea");
+        Switch swit = (Switch) findViewById(R.id.switchIdaVuelta);
+        swit.setVisibility(View.INVISIBLE);
         bmp.clear();
         new ParseoDatosLinea().execute();
         Log.e("Parseo",id_linea);
@@ -69,7 +75,7 @@ public class MainActivityLinea extends Activity {
         String tieneVuelta = "";
         String imgVuelta = "";
         String pmr = "";
-        seleccion = 0;
+        seleccion = "0";
 
         List<String> boletin = new ArrayList<String>();
         //Leyendo datos de la línea.
@@ -90,55 +96,62 @@ public class MainActivityLinea extends Activity {
             Log.e(tag, "Error al leer el JSON" + e);
         }
         //Leyendo datos de las paradas.
-        if (tieneIda.equals("1")) {
-            try {
-                JSONArray nombres_paradas = datos_paradas.getJSONArray("bloquesIda");
-                JSONArray horarios = datos_paradas.getJSONArray("horarioIda");
-                for (int i = 0; i < nombres_paradas.length(); i++) {
-                    if (nombres_paradas.getJSONObject(i).getString("tipo").equals("0")) {
-                        ArrayList<String> horas = new ArrayList<String>();
-                        for (int j = 0; j < horarios.length(); j++) {
-                            horas.add(horarios.getJSONObject(j).getJSONArray("horas").getString(i));
+        if (datos_paradas!=null){
+            if (tieneIda.equals("1")) {
+                try {
+                    JSONArray nombres_paradas = datos_paradas.getJSONArray("bloquesIda");
+                    JSONArray horarios = datos_paradas.getJSONArray("horarioIda");
+                    for (int i = 0; i < nombres_paradas.length(); i++) {
+                        if (nombres_paradas.getJSONObject(i).getString("tipo").equals("0")) {
+                            ArrayList<String> horas = new ArrayList<String>();
+                            for (int j = 0; j < horarios.length(); j++) {
+                                horas.add(horarios.getJSONObject(j).getJSONArray("horas").getString(i));
+                            }
+                            paradas_ida.add(nombres_paradas.getJSONObject(i).getString("nombre"));
+                            ida.put(nombres_paradas.getJSONObject(i).getString("nombre"), horas);
                         }
-                        paradas_ida.add(nombres_paradas.getJSONObject(i).getString("nombre"));
-                        ida.put(nombres_paradas.getJSONObject(i).getString("nombre"), horas);
                     }
+                } catch (Exception e) {
+                    Log.e(tag, "Error al leer el JSON" + e);
                 }
-            } catch (Exception e) {
-                Log.e(tag, "Error al leer el JSON" + e);
+            } else {
+                paradas_ida.add("No hay servicios disponibles");
+                seleccion = "1";
+            }
+            if (tieneVuelta.equals("1")) {
+                try {
+                    JSONArray nombres_paradas = datos_paradas.getJSONArray("bloquesVuelta");
+                    JSONArray horarios = datos_paradas.getJSONArray("horarioVuelta");
+                    for (int i = 0; i < nombres_paradas.length(); i++) {
+                        if (nombres_paradas.getJSONObject(i).getString("tipo").equals("0")) {
+                            ArrayList<String> horas = new ArrayList<String>();
+                            for (int j = 0; j < horarios.length(); j++) {
+                                horas.add(horarios.getJSONObject(j).getJSONArray("horas").getString(i));
+                            }
+                            paradas_vuelta.add(nombres_paradas.getJSONObject(i).getString("nombre"));
+                            vuelta.put(nombres_paradas.getJSONObject(i).getString("nombre"), horas);
+                        }
+                    }
+                } catch (Exception e) {
+                    Log.e(tag, "Error al leer el JSON" + e);
+                }
+            } else {
+                paradas_vuelta.add("No hay servicios disponibles");
+                seleccion = "0";
             }
         } else {
             paradas_ida.add("No hay servicios disponibles");
-            seleccion = 1;
-        }
-        if (tieneVuelta.equals("1")) {
-            try {
-                JSONArray nombres_paradas = datos_paradas.getJSONArray("bloquesVuelta");
-                JSONArray horarios = datos_paradas.getJSONArray("horarioVuelta");
-                for (int i = 0; i < nombres_paradas.length(); i++) {
-                    if (nombres_paradas.getJSONObject(i).getString("tipo").equals("0")) {
-                        ArrayList<String> horas = new ArrayList<String>();
-                        for (int j = 0; j < horarios.length(); j++) {
-                            horas.add(horarios.getJSONObject(j).getJSONArray("horas").getString(i));
-                        }
-                        paradas_vuelta.add(nombres_paradas.getJSONObject(i).getString("nombre"));
-                        vuelta.put(nombres_paradas.getJSONObject(i).getString("nombre"), horas);
-                    }
-                }
-            } catch (Exception e) {
-                Log.e(tag, "Error al leer el JSON" + e);
-            }
-        } else {
             paradas_vuelta.add("No hay servicios disponibles");
-            seleccion = 0;
         }
         //Leyendo noticias de la línea.
         if (tieneNoticias.equals("1")) {
-            for (int i = 0; i > noticias.length(); i++) {
-                try {
-                    boletin.add(datos_linea.getString("titulo"));
-                } catch (Exception e) {
-                    Log.e(tag, "Error al leer el JSON" + e);
+            if (noticias!=null){
+                for (int i = 0; i > noticias.length(); i++) {
+                    try {
+                        boletin.add(datos_linea.getString("titulo"));
+                    } catch (Exception e) {
+                        Log.e(tag, "Error al leer el JSON" + e);
+                    }
                 }
             }
         } else {
@@ -151,39 +164,30 @@ public class MainActivityLinea extends Activity {
         cargar_imagenes(imgIda, imgVuelta);
         TextView txtnombre = (TextView) findViewById(R.id.nombrelinea);
         TextView txtoperador = (TextView) findViewById(R.id.operador);
+        TextView txtcabecera = (TextView) findViewById(R.id.cabeceranoticias);
         TextView txtnoticias = (TextView) findViewById(R.id.noticias);
         txtnombre.setText(nombre);
         txtoperador.setText(operador);
-        txtnoticias.setText(boletin.toString() + "\n" + pmr);
-        actualiza_datos();
-    }
-    private void actualiza_datos(){
+        txtcabecera.setText("Información de la línea:");
+        String texto = "";
+        for (String elemento: boletin){
+            texto = texto.concat(elemento + "\n");
+        }
+        txtnoticias.setText(pmr + ".\n" + texto);
         Switch switchidavuelta = (Switch) findViewById(R.id.switchIdaVuelta);
-        switchidavuelta.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView,boolean isChecked) {
-                Log.e("Parseo", "Cambiado");
-                if(isChecked){
-                    seleccion=1;
-                }else{
-                    seleccion=0;
-                }
-            }
-        });
-        ArrayAdapter adapterParadas = null;
         switch (seleccion) {
-            case 0:
+            case "0":
                 adapterParadas = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item,paradas_ida);
                 switchidavuelta.setChecked(false);
                 break;
-            case 1:
+            case "1":
                 adapterParadas = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item,paradas_vuelta);
                 switchidavuelta.setChecked(true);
                 break;
         }
+        switchidavuelta.setVisibility(View.VISIBLE);
         ListView paradaslv = (ListView)findViewById(R.id.paradasListView);
         paradaslv.setAdapter(adapterParadas);
-
         paradaslv.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -198,42 +202,70 @@ public class MainActivityLinea extends Activity {
                 // Abre una nueva Activity:
                 Intent myIntent = new Intent(view.getContext(), MainActivity2.class);
                 String salida = (String) parent.getItemAtPosition(position);
-                List<String> paramtiempo = new ArrayList<String>();
+                ArrayList<String> paramtiempo = new ArrayList<String>();
                 switch (seleccion) {
-                    case 0:
+                    case "0":
                         paramtiempo = ida.get(salida);
                         break;
-                    case 1:
+                    case "1":
                         paramtiempo = vuelta.get(salida);
                         break;
                 }
                 if (paramtiempo!=null){
                     Log.e("Parseo",parent.getItemAtPosition(position).toString());
                     Log.e("Parseo",paramtiempo.toString());
-                    //myIntent.putExtra("tiempos_paradas", paramtiempo);
+                    myIntent.putStringArrayListExtra("tiempos_paradas", paramtiempo);
                     startActivity(myIntent);
                 }
             }
         });
+        switchidavuelta.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView,boolean isChecked) {
+                Log.e("Parseo", "Cambiado");
+                if(isChecked){
+                    seleccion="1";
+                    actualiza_datos();
+                }else{
+                    seleccion="0";
+                    actualiza_datos();
+                }
+            }
+        });
+    }
+    private void actualiza_datos(){
+        //adapterParadas.clear();
+        switch (seleccion) {
+            case "0":
+                adapterParadas = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item,paradas_ida);
+                break;
+            case "1":
+                adapterParadas = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item,paradas_vuelta);
+                break;
+        }
+        ListView paradaslv = (ListView)findViewById(R.id.paradasListView);
+        paradaslv.setAdapter(adapterParadas);
+        if (!bmp.isEmpty()){
+            actualiza_bitmap();
+        }
     }
     private void actualiza_bitmap(){
-        if (bmp!=null){
-            ImageView img = (ImageView) findViewById(R.id.recorrido);
-            img.setImageBitmap(bmp.get(seleccion));
-        }
+        ImageView img = (ImageView) findViewById(R.id.recorrido);
+        img.setImageBitmap(bmp.get(seleccion));
+        Log.e("Parseo",bmp.toString() + "\n" + "seleccionado " + seleccion + "; " + bmp.get(seleccion));
     }
     private void cargar_imagenes(String url1,String url2){
         if (url1!=""){
-            new DownloadImageTask().execute(url1);
+            new DownloadImageTask().execute(new String[]{url1, "0"});
         }
         if (url2!=""){
-            new DownloadImageTask().execute(url2);
+            new DownloadImageTask().execute(new String[]{url2, "1"});
         }
         new DownloadImageTask();
     }
-    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap>
+    private class DownloadImageTask extends AsyncTask<String[], Void, Bitmap>
     {
-        protected Bitmap doInBackground(String... urls)
+        protected Bitmap doInBackground(String[]... urls)
         {
             return descarga_imagen(urls[0]);
         }
@@ -243,10 +275,12 @@ public class MainActivityLinea extends Activity {
             actualiza_bitmap();
         }
     }
-    private Bitmap descarga_imagen(String url){
+    private Bitmap descarga_imagen(String[] array){
         try {
-            Bitmap bitmap = BitmapFactory.decodeStream((InputStream)new URL(url).getContent());
-            bmp.add(bitmap);
+            Bitmap bitmap = BitmapFactory.decodeStream((InputStream)new URL(array[0]).getContent());
+
+            bmp.put(array[1],bitmap);
+            Log.e("Parseo",bmp.toString());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -256,7 +290,7 @@ public class MainActivityLinea extends Activity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            //Toast.makeText(MainActivityLinea.this, "Espere, por favor.", Toast.LENGTH_LONG).show();
+            Toast.makeText(MainActivityLinea.this, "Espere, por favor.", Toast.LENGTH_LONG).show();
         }
 
         @Override
@@ -288,12 +322,13 @@ public class MainActivityLinea extends Activity {
                 Log.e(tag, "Respuesta de HTML");
             } catch (Exception e) {
                 Log.e(tag, "No hubo respuesta de HTML.");
+                mostraralerta();
             }
             if (jsonStr1 != null && jsonStr2 != null && jsonStr3 != null) {
                 try {
                     datos_linea = new JSONObject(jsonStr1);
-                    datos_paradas = new JSONObject(jsonStr2).getJSONArray("planificadores").getJSONObject(0);
                     noticias = new JSONObject(jsonStr3).getJSONArray("noticias");
+                    datos_paradas = new JSONObject(jsonStr2).getJSONArray("planificadores").getJSONObject(0);
                 } catch (final JSONException e) {
                     Log.e(tag, "Error al parsear: " + e.getMessage());
                 }
@@ -302,10 +337,23 @@ public class MainActivityLinea extends Activity {
         }
         @Override
         protected void onPostExecute(Void result) {
-            Toast.makeText(MainActivityLinea.this, "Descargado.", Toast.LENGTH_LONG).show();
+            //Toast.makeText(MainActivityLinea.this, "Descargado.", Toast.LENGTH_LONG).show();
             super.onPostExecute(result);
             cargarLinea();
         }
+    }
+    private void mostraralerta(){
+        AlertDialog.Builder dialogo = new AlertDialog.Builder(this);
+        dialogo.setTitle("Fallo en la conexión");
+        dialogo.setMessage("Por favor, compruebe su conexión a Internet.");
+        dialogo.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+                finish();
+            }
+        });
+        dialogo.create();
+        dialogo.show();
     }
     private String clienteHttp(String dir_web) throws IOException {
         String body = "";

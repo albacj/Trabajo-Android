@@ -6,13 +6,13 @@ package com.example.alba.busessevilla;
 
 public class Lista_entrada2 {
 
-    private int textoTiempo;
+    private String textoTiempo;
 
-    public Lista_entrada2 (int textoTiempo) {
+    public Lista_entrada2 (String textoTiempo) {
         this.textoTiempo = textoTiempo;
     }
 
-    public int getTextoTiempo() {
+    public String getTextoTiempo() {
         return textoTiempo;
     }
 }

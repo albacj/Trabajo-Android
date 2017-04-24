@@ -13,7 +13,7 @@
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="38dp"
-        android:text="Tiempo aproximado de salida de la línea seleccionada:"
+        android:text="Tiempo aproximado de salida de la línea desde la parada seleccionada:"
         android:textAlignment="center"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="18sp"

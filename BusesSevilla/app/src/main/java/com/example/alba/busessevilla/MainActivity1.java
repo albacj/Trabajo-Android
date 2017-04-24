@@ -1,6 +1,8 @@
 package com.example.alba.busessevilla;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -160,6 +162,7 @@ public class MainActivity1 extends Activity {
                 Log.e(tag, "Respuesta de " + url);
             } catch (Exception e) {
                 Log.e(tag, "No hubo respuesta de " + url);
+                mostraralerta();
             }
             if (jsonStr != null) {
                 try {
@@ -183,7 +186,11 @@ public class MainActivity1 extends Activity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            //Toast.makeText(MainActivity1.this, "Espere, por favor.", Toast.LENGTH_LONG).show();
+            List<String> l = new ArrayList<String>();
+            ArrayAdapter<String> adapterVacio = new ArrayAdapter<String>(getApplicationContext(), R.layout.entrada, l);
+            ListView listalv = (ListView)findViewById(R.id.lineasListView);
+            listalv.setAdapter(adapterVacio);
+            Toast.makeText(MainActivity1.this, "Espere, por favor.", Toast.LENGTH_LONG).show();
         }
 
         @Override
@@ -197,6 +204,7 @@ public class MainActivity1 extends Activity {
                 Log.e(tag, "Respuesta de " + url);
             } catch (Exception e) {
                 Log.e(tag, "No hubo respuesta de " + url);
+                mostraralerta();
             }
             if (jsonStr != null) {
                 try {
@@ -263,10 +271,24 @@ public class MainActivity1 extends Activity {
         }
         @Override
         protected void onPostExecute(Void result) {
-            Toast.makeText(MainActivity1.this, "Descargado.", Toast.LENGTH_LONG).show();
+            //Toast.makeText(MainActivity1.this, "Descargado.", Toast.LENGTH_LONG).show();
             super.onPostExecute(result);
             cargarListaLineas();
         }
+    }
+
+    private void mostraralerta(){
+        AlertDialog.Builder dialogo = new AlertDialog.Builder(this);
+        dialogo.setTitle("Fallo en la conexión");
+        dialogo.setMessage("Por favor, compruebe su conexión a Internet.");
+        dialogo.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+                finish();
+            }
+        });
+        dialogo.create();
+        dialogo.show();
     }
 
     private String clienteHttp(String dir_web) throws IOException {

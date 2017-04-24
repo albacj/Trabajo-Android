@@ -15,7 +15,7 @@
     android:layout_marginRight="8dp"
     android:layout_marginStart="8dp"
     android:layout_marginTop="42dp"
-    android:text="NOMBRE DE LA LÍNEA"
+    android:text=""
     android:textColor="@color/colorPrimaryDark"
     android:textSize="24sp"
     app:layout_constraintLeft_toLeftOf="parent"
@@ -25,52 +25,128 @@
     <LinearLayout
         android:layout_width="368dp"
         android:layout_height="0dp"
-        android:orientation="vertical"
         android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="84dp"
+        android:orientation="horizontal"
+        android:weightSum="1"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:weightSum="1">
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/operador"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="OPERADOR"
-            tools:layout_editor_absoluteY="0dp"
-            tools:layout_editor_absoluteX="0dp" />
+            android:gravity="center_vertical|right"
+            android:text=""
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="0dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="368dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="110dp"
+        android:orientation="horizontal"
+        android:weightSum="1"
+        app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
+        app:layout_constraintHorizontal_bias="0.296"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0">
 
         <Switch
             android:id="@+id/switchIdaVuelta"
-            android:layout_width="match_parent"
+            android:layout_width="182dp"
             android:layout_height="wrap_content"
             android:text=""
+            android:textColorHint="@android:color/holo_blue_dark"
+            android:textColorLink="@android:color/holo_blue_dark"
             android:textOff="IDA"
             android:textOn="VUELTA"
-            tools:checked="false" />
+            tools:checked="false"
+            android:visibility="invisible"
+            android:layout_weight="0.12" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="368dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="110dp"
+        android:orientation="horizontal"
+        android:weightSum="1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
+        app:layout_constraintHorizontal_bias="0.481"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintVertical_bias="0.0">
 
         <ListView
             android:id="@+id/paradasListView"
-            android:layout_width="wrap_content"
-            android:layout_height="250dp"/>
-
-        <TextView
-            android:id="@+id/noticias"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="NOTICIAS"
-            tools:layout_editor_absoluteY="0dp"
-            tools:layout_editor_absoluteX="0dp" />
+            android:layout_width="184dp"
+            android:layout_height="351dp"
+            android:layout_marginTop="30dp"
+            android:layout_weight="1.02" />
 
         <ImageView
             android:id="@+id/recorrido"
+            android:layout_width="122dp"
+            android:layout_height="386dp"
+            tools:ignore="ContentDescription"
+            android:layout_weight="0.66" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="368dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="500dp"
+        android:orientation="vertical"
+        android:weightSum="1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:id="@+id/linearLayout">
+
+        <TextView
+            android:id="@+id/cabeceranoticias"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:srcCompat="@android:drawable/presence_away" />
+            android:text=""
+            android:textStyle="bold"
+            android:textSize="16dp"
+            tools:layout_editor_absoluteX="-8dp"
+            tools:layout_editor_absoluteY="0dp" />
+
+        <TextView
+            android:id="@+id/noticias"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=""
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="0dp" />
+
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>
