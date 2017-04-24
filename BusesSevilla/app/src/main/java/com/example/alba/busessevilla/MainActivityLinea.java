@@ -12,8 +12,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
-import android.widget.RadioButton;
-import android.widget.Spinner;
+import android.widget.ListView;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -45,7 +44,6 @@ public class MainActivityLinea extends Activity {
     JSONArray noticias;
     Map<String,ArrayList> ida = new HashMap<String,ArrayList>();
     Map<String,ArrayList> vuelta = new HashMap<String,ArrayList>();
-    Spinner paradasSpinner;
     List<String> paradas_ida = new ArrayList<String>();
     List<String> paradas_vuelta = new ArrayList<String>();
     List<Bitmap> bmp = new ArrayList<Bitmap>();
@@ -160,11 +158,11 @@ public class MainActivityLinea extends Activity {
         actualiza_datos();
     }
     private void actualiza_datos(){
-        paradasSpinner = null;
         Switch switchidavuelta = (Switch) findViewById(R.id.switchIdaVuelta);
         switchidavuelta.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView,boolean isChecked) {
+                Log.e("Parseo", "Cambiado");
                 if(isChecked){
                     seleccion=1;
                 }else{
@@ -183,18 +181,38 @@ public class MainActivityLinea extends Activity {
                 switchidavuelta.setChecked(true);
                 break;
         }
-        paradasSpinner = (Spinner)findViewById(R.id.paradasSpinner);
-        paradasSpinner.setAdapter(adapterParadas);
+        ListView paradaslv = (ListView)findViewById(R.id.paradasListView);
+        paradaslv.setAdapter(adapterParadas);
 
-        paradasSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
+        paradaslv.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
             @Override
-            public void onItemSelected(AdapterView<?> adapter, View view,
-                                       int position, long id) {
-                Log.e("Parseo",adapter.getItemAtPosition(position).toString());
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+        paradaslv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                // Abre una nueva Activity:
+                Intent myIntent = new Intent(view.getContext(), MainActivity2.class);
+                String salida = (String) parent.getItemAtPosition(position);
+                List<String> paramtiempo = new ArrayList<String>();
+                switch (seleccion) {
+                    case 0:
+                        paramtiempo = ida.get(salida);
+                        break;
+                    case 1:
+                        paramtiempo = vuelta.get(salida);
+                        break;
+                }
+                if (paramtiempo!=null){
+                    Log.e("Parseo",parent.getItemAtPosition(position).toString());
+                    Log.e("Parseo",paramtiempo.toString());
+                    //myIntent.putExtra("tiempos_paradas", paramtiempo);
+                    startActivity(myIntent);
+                }
             }
         });
     }

@@ -123,7 +123,6 @@ public class MainActivity1 extends Activity {
                 texto_inferior_entrada.setText(((Lista_entrada) entrada).getTextoPuebloLinea());
             }
         });
-        Log.e(tag, "Selector generado: " + lista_lineas.toArray().toString());
 
         //Selecciona un ítem y lleva a la activity2 con el tiempo que queda para que pase el autobús
 

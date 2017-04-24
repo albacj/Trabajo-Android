@@ -33,7 +33,8 @@
         android:layout_marginTop="84dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        android:weightSum="1">
 
         <TextView
             android:id="@+id/operador"
@@ -52,13 +53,10 @@
             android:textOn="VUELTA"
             tools:checked="false" />
 
-        <Spinner
-            android:id="@+id/paradasSpinner"
+        <ListView
+            android:id="@+id/paradasListView"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/colorPrimary"
-            tools:layout_editor_absoluteY="0dp"
-            tools:layout_editor_absoluteX="0dp" />
+            android:layout_height="250dp"/>
 
         <TextView
             android:id="@+id/noticias"
