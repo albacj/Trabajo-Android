@@ -29,7 +29,6 @@ import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -124,20 +123,25 @@ public class MainActivity1 extends Activity {
                 texto_inferior_entrada.setText(((Lista_entrada) entrada).getTextoPuebloLinea());
             }
         });
-        Log.e(tag, "Selector generado: " + lista_lineas);
+        Log.e(tag, "Selector generado: " + lista_lineas.toArray().toString());
 
         //Selecciona un ítem y lleva a la activity2 con el tiempo que queda para que pase el autobús
 
         lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                                         @Override
-                                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                // Abre una nueva Activity:
+                Intent myIntent = new Intent(view.getContext(), MainActivityLinea.class);
 
-                                             // Abre una nueva Activity:
-                                             Intent myIntent = new Intent(view.getContext(), MainActivity2.class);
-                                             startActivity(myIntent);
+                Lista_entrada salida = (Lista_entrada) parent.getItemAtPosition(position);
+                String paramlinea = salida.getId_linea();
 
-                                         }
-                                     }
+                if (!paramlinea.equals("-1")){
+                    myIntent.putExtra("id_linea", paramlinea);
+                    startActivity(myIntent);
+                }
+            }
+        }
         );
     }
 
@@ -216,6 +220,32 @@ public class MainActivity1 extends Activity {
                                     try {
                                         JSONObject jObj = new JSONObject(jsonStr);
                                         lineas = jObj.getJSONArray("lineas");
+                                        if (lineas!= null) {
+                                            for (int j = 0; j < lineas.length(); j++) {
+                                                try {
+                                                    JSONObject obj = lineas.getJSONObject(j);
+                                                    if (obj.getString("modo").equals("Bus")){
+                                                        String id_linea = obj.getString("idLinea");
+                                                        String linea = obj.getString("nombre");
+                                                        String nombre = "";
+                                                        String[] partes = linea.split(" ");
+                                                        String cod_linea = partes[0];
+                                                        for(int k=1;k<partes.length;k++) {
+                                                            nombre = nombre.concat(partes[k] + " ");
+                                                        }
+                                                        mapa_lineas.put(linea,id_linea);
+                                                        lista_lineas.add(new Lista_entrada(cod_linea,nombre,id_linea));
+                                                    }
+                                                } catch (Exception e) {
+                                                    Log.e(tag, "Error al leer el JSON" + e);
+                                                }
+                                            }
+                                            if (lista_lineas.size() == 0){
+                                                lista_lineas.add(new Lista_entrada("","No hay servicios disponibles.","-1"));
+                                            }
+                                        } else {
+                                            Log.e(tag, "Error al acceder a la página.");
+                                        }
                                     } catch (Exception e) {
                                         Log.e(tag, "Error al generar líneas: " + e.getMessage());
                                     }
@@ -223,29 +253,6 @@ public class MainActivity1 extends Activity {
                             } catch (Exception e) {
                                     Log.e(tag, "No hubo respuesta de " + url);
                             }
-                        }
-                        if (lineas!= null) {
-                            for (int i = 0; i < lineas.length(); i++) {
-                                try {
-                                    JSONObject obj = lineas.getJSONObject(i);
-                                    if (obj.getString("modo").equals("Bus")){
-                                        String id_linea = obj.getString("idLinea");
-                                        String linea = obj.getString("nombre");
-                                        String nombre = "";
-                                        String[] partes = linea.split(" ");
-                                        String cod_linea = partes[0];
-                                        for(int j=1;j<partes.length;j++) {
-                                            nombre = nombre.concat(partes[j] + " ");
-                                        }
-                                        mapa_lineas.put(id_linea,linea);
-                                        lista_lineas.add(new Lista_entrada(cod_linea,nombre));
-                                    }
-                                } catch (Exception e) {
-                                    Log.e(tag, "Error al leer el JSON" + e);
-                                }
-                            }
-                        } else {
-                            Log.e(tag, "Error al acceder a la página.");
                         }
                         Log.e(tag, "Contenido lista: " + id_municipios);
                         Log.e(tag, "Contenido mapa: " + mapa_lineas);}

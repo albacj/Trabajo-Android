@@ -8,10 +8,12 @@ public class Lista_entrada {
 
     private String textoNumLinea;
     private String textoPuebloLinea;
+    private String id_linea;
 
-    public Lista_entrada (String textoNumLinea, String textoPuebloLinea) {
+    public Lista_entrada (String textoNumLinea, String textoPuebloLinea, String id_linea) {
         this.textoNumLinea = textoNumLinea;
         this.textoPuebloLinea = textoPuebloLinea;
+        this.id_linea = id_linea;
     }
 
     public String getTextoNumLinea() {
@@ -20,6 +22,10 @@ public class Lista_entrada {
 
     public String getTextoPuebloLinea() {
         return textoPuebloLinea;
+    }
+
+    public String getId_linea() {
+        return id_linea;
     }
 
 }
