@@ -345,7 +345,7 @@ public class MainActivityLinea extends Activity {
     private void mostraralerta(){
         AlertDialog.Builder dialogo = new AlertDialog.Builder(this);
         dialogo.setTitle("Fallo en la conexión");
-        dialogo.setMessage("Por favor, compruebe su conexión a Internet.");
+        dialogo.setMessage("Inténtelo de nuevo más tarde o\ncompruebe su conexión a Internet.");
         dialogo.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 dialog.cancel();
