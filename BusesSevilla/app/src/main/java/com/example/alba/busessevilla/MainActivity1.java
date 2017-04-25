@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -38,7 +39,6 @@ import java.util.Map;
 
 public class MainActivity1 extends Activity {
 
-    private Spinner puebloSpinner;
     String url;
     JSONObject jObj = new JSONObject();
     String [] lista_municipios;
@@ -49,8 +49,15 @@ public class MainActivity1 extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_main1);
+        TextView texto1 = (TextView) findViewById(R.id.infoTextView);
+        texto1.setVisibility(View.INVISIBLE);
+        TextView texto2 = (TextView) findViewById(R.id.infoLineasTextView);
+        texto2.setVisibility(View.INVISIBLE);
+        Spinner puebloSpinner = (Spinner)findViewById(R.id.puebloSpinner);
+        puebloSpinner.setVisibility(View.INVISIBLE);
+        ProgressBar progreso2 = (ProgressBar) findViewById(R.id.progreso2);
+        progreso2.setVisibility(View.INVISIBLE);
         url = "http://api.ctan.es/v1/Consorcios/1/municipios";
         new ParseoMunicipio().execute();
 
@@ -58,6 +65,8 @@ public class MainActivity1 extends Activity {
     }
 
     private void cargarListaMunicipios (){
+        ProgressBar progreso1 = (ProgressBar) findViewById(R.id.progreso1);
+        progreso1.setVisibility(View.INVISIBLE);
         String tag = "Parseo";
         JSONArray municipios = new JSONArray();
         try{
@@ -82,9 +91,13 @@ public class MainActivity1 extends Activity {
             Log.e(tag, "Error al acceder a la página.");
         }
         ArrayAdapter adapterPueblo = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, lista_municipios);
-        puebloSpinner = (Spinner)findViewById(R.id.puebloSpinner);
+        final Spinner puebloSpinner = (Spinner)findViewById(R.id.puebloSpinner);
         puebloSpinner.setAdapter(adapterPueblo);
-
+        puebloSpinner.setVisibility(View.VISIBLE);
+        TextView texto1 = (TextView) findViewById(R.id.infoTextView);
+        texto1.setVisibility(View.VISIBLE);
+        TextView texto2 = (TextView) findViewById(R.id.infoLineasTextView);
+        texto2.setVisibility(View.VISIBLE);
         puebloSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
             @Override
             public void onItemSelected(AdapterView<?> adapter, View view,
@@ -93,6 +106,8 @@ public class MainActivity1 extends Activity {
                 String tag = "Parseo";
                 String seleccionado = mapa_municipios.get(puebloSpinner.getSelectedItem());
                 if (seleccionado!= null){
+                    ProgressBar progreso2 = (ProgressBar) findViewById(R.id.progreso2);
+                    progreso2.setVisibility(View.VISIBLE);
                     url = url.concat(seleccionado + "/nucleos");
                     new ParseoLinea().execute();
                 } else {
@@ -114,7 +129,8 @@ public class MainActivity1 extends Activity {
         datos.add(new Lista_entrada("M-163", "Camas"));
         datos.add(new Lista_entrada("M-142B", "Palomares del Río"));
         datos.add(new Lista_entrada("M-169", "Villamanrique"));*/
-
+        ProgressBar progreso2 = (ProgressBar) findViewById(R.id.progreso2);
+        progreso2.setVisibility(View.INVISIBLE);
         String tag = "Parseo";
         ListView lista = (ListView) findViewById(R.id.lineasListView);
         Collections.sort(lista_lineas,new Comparator<Lista_entrada>() {
@@ -133,7 +149,6 @@ public class MainActivity1 extends Activity {
                 texto_inferior_entrada.setText(((Lista_entrada) entrada).getTextoPuebloLinea());
             }
         });
-
         //Selecciona un ítem y lleva a la activity2 con el tiempo que queda para que pase el autobús
 
         lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -154,7 +169,8 @@ public class MainActivity1 extends Activity {
         );
     }
 
-    private class ParseoMunicipio extends AsyncTask<Void, Void, Void> {
+    private class ParseoMunicipio extends AsyncTask<Void, Void, Void>{
+        private String error = "";
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -170,7 +186,7 @@ public class MainActivity1 extends Activity {
                 Log.e(tag, "Respuesta de " + url);
             } catch (Exception e) {
                 Log.e(tag, "No hubo respuesta de " + url);
-                mostraralerta();
+                error = e.getMessage();
             }
             if (jsonStr != null) {
                 try {
@@ -185,12 +201,17 @@ public class MainActivity1 extends Activity {
         protected void onPostExecute(Void result) {
             //Toast.makeText(MainActivity1.this, "Descargado.", Toast.LENGTH_LONG).show();
             super.onPostExecute(result);
-            cargarListaMunicipios();
+            if (error.equals("")) {
+                cargarListaMunicipios();
+            } else {
+                mostraralerta(error);
+            }
         }
     }
 
     private class ParseoLinea extends AsyncTask<Void, Void, Void> {
         List<String> id_municipios = new ArrayList();
+        String error = "";
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -198,7 +219,7 @@ public class MainActivity1 extends Activity {
             ArrayAdapter<String> adapterVacio = new ArrayAdapter<String>(getApplicationContext(), R.layout.entrada, l);
             ListView listalv = (ListView)findViewById(R.id.lineasListView);
             listalv.setAdapter(adapterVacio);
-            Toast.makeText(MainActivity1.this, "Espere, por favor.", Toast.LENGTH_LONG).show();
+            //Toast.makeText(MainActivity1.this, "Espere, por favor.", Toast.LENGTH_LONG).show();
         }
 
         @Override
@@ -206,13 +227,14 @@ public class MainActivity1 extends Activity {
             String tag = "Parseo";
             String jsonStr = "";
             lista_lineas.clear();
+            mapa_lineas.clear();
             JSONArray nucleos = new JSONArray();
             try {
                 jsonStr = clienteHttp(url);
                 Log.e(tag, "Respuesta de " + url);
             } catch (Exception e) {
                 Log.e(tag, "No hubo respuesta de " + url);
-                mostraralerta();
+                error = e.getMessage();
             }
             if (jsonStr != null) {
                 try {
@@ -283,22 +305,34 @@ public class MainActivity1 extends Activity {
         protected void onPostExecute(Void result) {
             //Toast.makeText(MainActivity1.this, "Descargado.", Toast.LENGTH_LONG).show();
             super.onPostExecute(result);
-            cargarListaLineas();
+            if (error.equals("")) {
+                cargarListaLineas();
+            } else {
+                mostraralerta(error);
+            }
         }
     }
 
-    private void mostraralerta(){
-        AlertDialog.Builder dialogo = new AlertDialog.Builder(this);
-        dialogo.setTitle("Fallo en la conexión");
-        dialogo.setMessage("Inténtelo de nuevo más tarde o\ncompruebe su conexión a Internet.");
-        dialogo.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-                finish();
-            }
-        });
-        dialogo.create();
-        dialogo.show();
+    private void mostraralerta(String mensaje){
+        try{
+            ProgressBar progreso1 = (ProgressBar) findViewById(R.id.progreso1);
+            progreso1.setVisibility(View.INVISIBLE);
+            ProgressBar progreso2 = (ProgressBar) findViewById(R.id.progreso2);
+            progreso2.setVisibility(View.INVISIBLE);
+            AlertDialog.Builder dialogo = new AlertDialog.Builder(MainActivity1.this);
+            dialogo.setTitle("Fallo en la conexión");
+            dialogo.setMessage(mensaje);
+            dialogo.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel();
+                    finish();
+                }
+            });
+            dialogo.create();
+            dialogo.show();
+        } catch (Exception e){
+            Log.e("Parseo", e.getMessage());
+        }
     }
 
     private String clienteHttp(String dir_web) throws IOException {
@@ -323,12 +357,18 @@ public class MainActivity1 extends Activity {
             urlConnection.disconnect();
         } catch (MalformedURLException e) {
             body = e.toString(); //Error URL incorrecta
+            throw new RuntimeException("Por favor inténtelo de nuevo más tarde.");
         } catch (SocketTimeoutException e){
             body = e.toString(); //Error: Finalizado el timeout esperando la respuesta del servidor.
+            throw new RuntimeException("Por favor inténtelo de nuevo más tarde.");
         } catch (Exception e) {
             body = e.toString();//Error diferente a los anteriores.
+            throw new RuntimeException("Por favor compruebe su conexión a Internet.");
         }
         Log.e("Parseo", "body" + body);
+        if (body==""){
+            throw new RuntimeException("Por favor inténtelo de nuevo más tarde.");
+        }
         return body;
     }
 

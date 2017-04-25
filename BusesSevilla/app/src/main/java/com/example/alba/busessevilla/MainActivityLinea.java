@@ -15,6 +15,7 @@ import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -76,7 +77,8 @@ public class MainActivityLinea extends Activity {
         String imgVuelta = "";
         String pmr = "";
         seleccion = "0";
-
+        ProgressBar progreso = (ProgressBar) findViewById(R.id.progreso);
+        progreso.setVisibility(View.INVISIBLE);
         List<String> boletin = new ArrayList<String>();
         //Leyendo datos de la línea.
         try {
@@ -290,10 +292,11 @@ public class MainActivityLinea extends Activity {
         return null;
     }
     private class ParseoDatosLinea extends AsyncTask<Void, Void, Void> {
+        String error = "";
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            Toast.makeText(MainActivityLinea.this, "Espere, por favor.", Toast.LENGTH_LONG).show();
+            //Toast.makeText(MainActivityLinea.this, "Espere, por favor.", Toast.LENGTH_LONG).show();
         }
 
         @Override
@@ -325,7 +328,7 @@ public class MainActivityLinea extends Activity {
                 Log.e(tag, "Respuesta de HTML");
             } catch (Exception e) {
                 Log.e(tag, "No hubo respuesta de HTML.");
-                mostraralerta();
+                error = e.getMessage();
             }
             if (jsonStr1 != null && jsonStr2 != null && jsonStr3 != null) {
                 try {
@@ -342,22 +345,33 @@ public class MainActivityLinea extends Activity {
         protected void onPostExecute(Void result) {
             //Toast.makeText(MainActivityLinea.this, "Descargado.", Toast.LENGTH_LONG).show();
             super.onPostExecute(result);
-            cargarLinea();
+            if (error.equals("")){
+                cargarLinea();
+            } else {
+                mostraralerta(error);
+            }
         }
     }
-    private void mostraralerta(){
-        AlertDialog.Builder dialogo = new AlertDialog.Builder(this);
-        dialogo.setTitle("Fallo en la conexión");
-        dialogo.setMessage("Inténtelo de nuevo más tarde o\ncompruebe su conexión a Internet.");
-        dialogo.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-                finish();
-            }
-        });
-        dialogo.create();
-        dialogo.show();
+    private void mostraralerta(String mensaje){
+        try{
+            ProgressBar progreso = (ProgressBar) findViewById(R.id.progreso);
+            progreso.setVisibility(View.INVISIBLE);
+            AlertDialog.Builder dialogo = new AlertDialog.Builder(MainActivityLinea.this);
+            dialogo.setTitle("Fallo en la conexión");
+            dialogo.setMessage(mensaje);
+            dialogo.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel();
+                    finish();
+                }
+            });
+            dialogo.create();
+            dialogo.show();
+        } catch (Exception e){
+            Log.e("Parseo", e.getMessage());
+        }
     }
+
     private String clienteHttp(String dir_web) throws IOException {
         String body = "";
         try {
@@ -380,12 +394,18 @@ public class MainActivityLinea extends Activity {
             urlConnection.disconnect();
         } catch (MalformedURLException e) {
             body = e.toString(); //Error URL incorrecta
+            throw new RuntimeException("Por favor inténtelo de nuevo más tarde.");
         } catch (SocketTimeoutException e){
             body = e.toString(); //Error: Finalizado el timeout esperando la respuesta del servidor.
+            throw new RuntimeException("Por favor inténtelo de nuevo más tarde.");
         } catch (Exception e) {
             body = e.toString();//Error diferente a los anteriores.
+            throw new RuntimeException("Por favor compruebe su conexión a Internet.");
         }
         Log.e("Parseo", "body" + body);
+        if (body==""){
+            throw new RuntimeException("Por favor inténtelo de nuevo más tarde.");
+        }
         return body;
     }
 
