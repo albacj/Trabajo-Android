@@ -14,11 +14,15 @@ import java.util.TimeZone;
 
 public class MainActivity2 extends Activity {
 
+    String nombre_linea;
+    String nombre_parada;
     ArrayList<String> tiempos_paradas;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Intent actlinea = getIntent();
+        nombre_linea = actlinea.getStringExtra("nombre_linea");
+        nombre_parada = actlinea.getStringExtra("nombre_parada");
         tiempos_paradas = actlinea.getStringArrayListExtra("tiempos_paradas");
         setContentView(R.layout.activity_main2);
 
@@ -55,6 +59,10 @@ public class MainActivity2 extends Activity {
             datos.add(new Lista_entrada2("Sin estimaciones."));
         }
 
+        TextView textolinea = (TextView) findViewById(R.id.nombrelinea);
+        textolinea.setText(nombre_linea);
+        TextView textoparada = (TextView) findViewById(R.id.infoTiempoTextView);
+        textoparada.setText("Tiempo aproximado de salida desde la parada " + nombre_parada + ":");
         ListView lista = (ListView) findViewById(R.id.tiempoListView);
 
         lista.setAdapter(new Lista_adaptador2(this, R.layout.entrada2, datos){

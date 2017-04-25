@@ -214,6 +214,9 @@ public class MainActivityLinea extends Activity {
                 if (paramtiempo!=null){
                     Log.e("Parseo",parent.getItemAtPosition(position).toString());
                     Log.e("Parseo",paramtiempo.toString());
+                    TextView txtnombre = (TextView) findViewById(R.id.nombrelinea);
+                    myIntent.putExtra("nombre_linea", txtnombre.getText());
+                    myIntent.putExtra("nombre_parada", salida);
                     myIntent.putStringArrayListExtra("tiempos_paradas", paramtiempo);
                     startActivity(myIntent);
                 }
