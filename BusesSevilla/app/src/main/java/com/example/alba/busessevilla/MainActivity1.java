@@ -30,6 +30,8 @@ import java.net.MalformedURLException;
 import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -115,6 +117,12 @@ public class MainActivity1 extends Activity {
 
         String tag = "Parseo";
         ListView lista = (ListView) findViewById(R.id.lineasListView);
+        Collections.sort(lista_lineas,new Comparator<Lista_entrada>() {
+            @Override
+            public int compare(Lista_entrada o1, Lista_entrada o2) {
+                return o1.getTextoNumLinea().compareTo(o2.getTextoNumLinea());
+            }
+        });
         lista.setAdapter(new Lista_adaptador(this, R.layout.entrada, lista_lineas){
             @Override
             public void onEntrada(Object entrada, View view) {
@@ -240,8 +248,10 @@ public class MainActivity1 extends Activity {
                                                         for(int k=1;k<partes.length;k++) {
                                                             nombre = nombre.concat(partes[k] + " ");
                                                         }
-                                                        mapa_lineas.put(linea,id_linea);
-                                                        lista_lineas.add(new Lista_entrada(cod_linea,nombre,id_linea));
+                                                        if (!mapa_lineas.containsKey(linea)){
+                                                            mapa_lineas.put(linea,id_linea);
+                                                            lista_lineas.add(new Lista_entrada(cod_linea,nombre,id_linea));
+                                                        }
                                                     }
                                                 } catch (Exception e) {
                                                     Log.e(tag, "Error al leer el JSON" + e);
