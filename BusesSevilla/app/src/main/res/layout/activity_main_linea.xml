@@ -64,8 +64,8 @@
             android:id="@+id/switchIdaVuelta"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textOff="IDA"
-            android:textOn="VUELTA"
+            android:textOff="@string/ida"
+            android:textOn="@string/vuelta"
             android:thumbTextPadding="29dp"
             android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -100,7 +100,9 @@
             android:layout_width="184dp"
             android:layout_height="315dp"
             android:layout_marginTop="30dp"
-            android:layout_weight="1.02" />
+            android:layout_weight="1.02"
+            android:visibility="invisible"
+            android:background="@drawable/borde"/>
 
         <ImageView
             android:id="@+id/recorrido"

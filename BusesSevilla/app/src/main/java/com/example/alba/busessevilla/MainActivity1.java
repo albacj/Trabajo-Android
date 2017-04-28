@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CheckedTextView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
@@ -42,9 +43,10 @@ public class MainActivity1 extends Activity {
     String url;
     JSONObject jObj = new JSONObject();
     String [] lista_municipios;
-    ArrayList<Lista_entrada> lista_lineas = new ArrayList<Lista_entrada>();
-    Map<String, String> mapa_municipios = new HashMap<String, String>();
-    Map<String, String> mapa_lineas = new HashMap<String, String>();
+    ArrayList<Lista_entrada> lista_lineas = new ArrayList<>();
+    HashMap<String, String> mapa_municipios = new HashMap<>();
+    HashMap<String, String> mapa_municipios2 = new HashMap<>();
+    HashMap<String, String> mapa_lineas = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,11 +62,10 @@ public class MainActivity1 extends Activity {
         progreso2.setVisibility(View.INVISIBLE);
         url = "http://api.ctan.es/v1/Consorcios/1/municipios";
         new ParseoMunicipio().execute();
-
-        //String[] pueblos = {"Villamanrique","Pilas","Aznalcázar","Bollullos de la Mitación","Bormujos","Castilleja de la Cuesta","Sevilla"};
     }
 
     private void cargarListaMunicipios (){
+
         ProgressBar progreso1 = (ProgressBar) findViewById(R.id.progreso1);
         progreso1.setVisibility(View.INVISIBLE);
         String tag = "Parseo";
@@ -83,6 +84,7 @@ public class MainActivity1 extends Activity {
                     String id = obj.getString("idMunicipio");
                     lista_municipios[i] = municipio;
                     mapa_municipios.put(municipio,id);
+                    mapa_municipios2.put(id,municipio);
                 } catch (Exception e) {
                     Log.e(tag, "Error al leer el JSON: " + e);
                 }
@@ -90,7 +92,7 @@ public class MainActivity1 extends Activity {
         } else {
             Log.e(tag, "Error al acceder a la página.");
         }
-        ArrayAdapter adapterPueblo = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, lista_municipios);
+        ArrayAdapter adapterPueblo = new ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, lista_municipios);
         final Spinner puebloSpinner = (Spinner)findViewById(R.id.puebloSpinner);
         puebloSpinner.setAdapter(adapterPueblo);
         puebloSpinner.setVisibility(View.VISIBLE);
@@ -106,6 +108,8 @@ public class MainActivity1 extends Activity {
                 String tag = "Parseo";
                 String seleccionado = mapa_municipios.get(puebloSpinner.getSelectedItem());
                 if (seleccionado!= null){
+                    ListView lista = (ListView) findViewById(R.id.lineasListView);
+                    lista.setVisibility(View.INVISIBLE);
                     ProgressBar progreso2 = (ProgressBar) findViewById(R.id.progreso2);
                     progreso2.setVisibility(View.VISIBLE);
                     url = url.concat(seleccionado + "/nucleos");
@@ -125,14 +129,11 @@ public class MainActivity1 extends Activity {
 
     private void cargarListaLineas(){
 
-        /*datos.add(new Lista_entrada("M-120", "Bollullos de la Mitación"));
-        datos.add(new Lista_entrada("M-163", "Camas"));
-        datos.add(new Lista_entrada("M-142B", "Palomares del Río"));
-        datos.add(new Lista_entrada("M-169", "Villamanrique"));*/
         ProgressBar progreso2 = (ProgressBar) findViewById(R.id.progreso2);
         progreso2.setVisibility(View.INVISIBLE);
         String tag = "Parseo";
         ListView lista = (ListView) findViewById(R.id.lineasListView);
+        lista.setVisibility(View.VISIBLE);
         Collections.sort(lista_lineas,new Comparator<Lista_entrada>() {
             @Override
             public int compare(Lista_entrada o1, Lista_entrada o2) {
@@ -162,6 +163,7 @@ public class MainActivity1 extends Activity {
 
                 if (!paramlinea.equals("-1")){
                     myIntent.putExtra("id_linea", paramlinea);
+                    myIntent.putExtra("mapa_municipios", mapa_municipios2);
                     startActivity(myIntent);
                 }
             }
@@ -320,9 +322,9 @@ public class MainActivity1 extends Activity {
             ProgressBar progreso2 = (ProgressBar) findViewById(R.id.progreso2);
             progreso2.setVisibility(View.INVISIBLE);
             AlertDialog.Builder dialogo = new AlertDialog.Builder(MainActivity1.this);
-            dialogo.setTitle("Fallo en la conexión");
+            dialogo.setTitle(getText(R.string.error0));
             dialogo.setMessage(mensaje);
-            dialogo.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+            dialogo.setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.cancel();
                     finish();
@@ -357,17 +359,17 @@ public class MainActivity1 extends Activity {
             urlConnection.disconnect();
         } catch (MalformedURLException e) {
             body = e.toString(); //Error URL incorrecta
-            throw new RuntimeException("Por favor inténtelo de nuevo más tarde.");
+            throw new RuntimeException(getString(R.string.error1));
         } catch (SocketTimeoutException e){
             body = e.toString(); //Error: Finalizado el timeout esperando la respuesta del servidor.
-            throw new RuntimeException("Por favor inténtelo de nuevo más tarde.");
+            throw new RuntimeException(getString(R.string.error1));
         } catch (Exception e) {
             body = e.toString();//Error diferente a los anteriores.
-            throw new RuntimeException("Por favor compruebe su conexión a Internet.");
+            throw new RuntimeException(getString(R.string.error2));
         }
         Log.e("Parseo", "body" + body);
         if (body==""){
-            throw new RuntimeException("Por favor inténtelo de nuevo más tarde.");
+            throw new RuntimeException(getString(R.string.error1));
         }
         return body;
     }
