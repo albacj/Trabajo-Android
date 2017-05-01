@@ -4,7 +4,7 @@
     <string name="boton_consulta">Consultar</string>
     <string name="enlace"><a href="http://www.consorciotransportes-sevilla.com/">Para cualquier duda, pulse aquí.</a></string>
     <string name="seleccion_municipio">Seleccione dónde desea ir:</string>
-    <string name="seleccion_linea">Las siguientes líneas llevan a su destino.\nPor favor, seleccione una teniendo en cuenta la localidad de origen.</string>
+    <string name="seleccion_linea">Escoja una línea que le llevará a su destino.</string>
     <string name="ida">IDA</string>
     <string name="vuelta">VUELTA</string>
     <string name="info">Información de la línea:</string>
