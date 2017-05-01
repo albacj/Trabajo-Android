@@ -1,4 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Buses Sevilla</string>
+    <string name="bienvenida">Welcome to Buses Sevilla.\nHere you can quickly check the bus schedules for each of the bus routes within the province of Seville.</string>
+    <string name="boton_consulta">Check</string>
+    <string name="hora">" hour "</string>
+    <string name="horas">" hours "</string>
+    <string name="ok">Ok</string>
+    <string name="error0">Connection failure</string>
+    <string name="error1">Please try again later.</string>
+    <string name="error2">Please check your Internet connection.</string>
+    <string name="ida">DEPARTURE</string>
+    <string name="info">Information:</string>
+    <string name="minuto">" minute left"</string>
+    <string name="minutos">" minutes left"</string>
+    <string name="vuelta">RETURN</string>
+    <string name="sin_servicios">No services available</string>
+    <string name="sin_noticias">There is no news to show regarding the selected bus line.</string>
+    <string name="seleccion_municipio">Please choose where you wish to go:</string>
+    <string name="sin_estimaciones">Without estimations.</string>
+    <string name="info_tiempo">"Estimated time of departure from "</string>
+    <string name="seleccion_linea">The following bus lines are heading for destination.\nPlease choose according to the town of origin.</string>
+    <string name="enlace"><a href="http://www.consorciotransportes-sevilla.com/">For further information tap here.</a></string>
+    <string name="cambio_idioma">You have selected English.</string>
+    <string name="sin_navegador">No web browser can handle this request.</string>
 </resources>

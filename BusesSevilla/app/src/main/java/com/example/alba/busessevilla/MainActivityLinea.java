@@ -386,21 +386,42 @@ public class MainActivityLinea extends Activity {
                 jsonStr4 = clienteHttp(url4);
                 jsonStr5 = clienteHttp(url5);
                 jsonStr6 = clienteHttp(url6);
-                Log.e(tag, "Respuesta de HTML");
+                Log.e(tag, "Respuesta de HTML: " + url1 + "\n" + url2 + "\n" + url3 + "\n" + url4 + "\n" + url5 +"\n" + url6);
             } catch (Exception e) {
                 Log.e(tag, "No hubo respuesta de HTML.");
                 error = e.getMessage();
             }
-            if (jsonStr1 != null && jsonStr2 != null && jsonStr3 != null) {
+            if (jsonStr1 != null && jsonStr2 != null && jsonStr3 != null &&
+                    jsonStr4!=null && jsonStr5!=null && jsonStr6!=null) {
                 try {
                     datos_linea = new JSONObject(jsonStr1);
+                } catch (final JSONException e) {
+                    Log.e(tag, "Error al parsear datos de línea: " + e.getMessage());
+                }
+                try {
                     noticias = new JSONObject(jsonStr3).getJSONArray("noticias");
+                } catch (final JSONException e) {
+                    Log.e(tag, "Error al parsear noticias: " + e.getMessage());
+                }
+                try {
                     datos_bloques = new JSONObject(jsonStr2).getJSONArray("planificadores").getJSONObject(0);
+                } catch (final JSONException e) {
+                    Log.e(tag, "Error al parsear bloques de línea: " + e.getMessage());
+                }
+                try {
                     datos_paradas = new JSONObject(jsonStr4).getJSONArray("paradas");
+                } catch (final JSONException e) {
+                    Log.e(tag, "Error al parsear datos de paradas: " + e.getMessage());
+                }
+                try {
                     bloques_ida = new JSONObject(jsonStr5).getJSONArray("bloques");
+                } catch (final JSONException e) {
+                    Log.e(tag, "Error al parsear bloques de ida: " + e.getMessage());
+                }
+                try {
                     bloques_vuelta = new JSONObject(jsonStr6).getJSONArray("bloques");
                 } catch (final JSONException e) {
-                    Log.e(tag, "Error al parsear: " + e.getMessage());
+                    Log.e(tag, "Error al parsear bloques de vuelta: " + e.getMessage());
                 }
             }
             return null;
