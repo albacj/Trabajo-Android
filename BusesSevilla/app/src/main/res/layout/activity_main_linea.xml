@@ -1,30 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.alba.busessevilla.MainActivityLinea"
-    android:background="@color/fondo">
+    tools:context="com.example.alba.busessevilla.MainActivityLinea">
 
-    <TextView
+    <android.support.constraint.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/pantalla">
+
+        <TextView
     android:id="@+id/nombrelinea"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_marginEnd="8dp"
-    android:layout_marginLeft="16dp"
-    android:layout_marginRight="16dp"
+    android:layout_marginLeft="8dp"
+    android:layout_marginRight="8dp"
     android:layout_marginStart="8dp"
     android:layout_marginTop="16dp"
     android:text=""
     android:textAlignment="center"
     android:textColor="@color/colorPrimaryDark"
     android:textSize="18sp"
+    android:textStyle="bold"
     app:layout_constraintLeft_toLeftOf="parent"
     app:layout_constraintRight_toRightOf="parent"
     app:layout_constraintTop_toTopOf="parent" />
 
-    <LinearLayout
+        <LinearLayout
         android:layout_width="340dp"
         android:layout_height="0dp"
         android:layout_marginEnd="8dp"
@@ -50,7 +55,7 @@
 
     </LinearLayout>
 
-    <LinearLayout
+        <LinearLayout
         android:layout_width="220dp"
         android:layout_height="290dp"
         android:layout_marginTop="32dp"
@@ -76,7 +81,7 @@
 
     </LinearLayout>
 
-    <LinearLayout
+        <LinearLayout
         android:layout_width="340dp"
         android:layout_height="290dp"
         android:layout_marginEnd="8dp"
@@ -113,7 +118,7 @@
 
     </LinearLayout>
 
-    <ImageView
+        <ImageView
         android:id="@+id/imgnoticias"
         android:layout_width="40dp"
         android:layout_height="40dp"
@@ -127,7 +132,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp" />
 
-    <LinearLayout
+        <LinearLayout
         android:layout_width="340dp"
         android:layout_height="0dp"
         android:layout_marginEnd="8dp"
@@ -140,7 +145,7 @@
         android:visibility="invisible"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/linearLayout2"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
         android:background="@drawable/borde"
         android:id="@+id/linearLayout">
 
@@ -168,14 +173,43 @@
 
     </LinearLayout>
 
-    <ProgressBar
-        android:id="@+id/progreso"
-        style="?android:attr/progressBarStyleLarge"
-        android:layout_width="76dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
+        <ProgressBar
+            android:id="@+id/progreso"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="76dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent" />
 
-</android.support.constraint.ConstraintLayout>
+    </android.support.constraint.ConstraintLayout>
+
+    <FrameLayout
+        android:id="@+id/layoutsuperpuesto"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="invisible"
+        android:background="@drawable/fondo_mapa">
+
+        <ImageView
+            android:id="@+id/recorridoGrande"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            tools:ignore="ContentDescription" />
+
+        <ImageView
+            android:id="@+id/btncerrar"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="right"
+            android:src="@mipmap/cerrar" />
+
+    </FrameLayout>
+
+</RelativeLayout>

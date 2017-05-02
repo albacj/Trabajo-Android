@@ -4,14 +4,18 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.CompoundButton;
+import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -312,8 +316,127 @@ public class MainActivityLinea extends Activity {
         }
     }
     private void actualiza_bitmap(){
+        Bitmap sel = bmp.get(seleccion);
         ImageView img = (ImageView) findViewById(R.id.recorrido);
-        img.setImageBitmap(bmp.get(seleccion));
+        img.setImageBitmap(sel);
+        final ImageView imggrande = (ImageView) findViewById(R.id.recorridoGrande);
+        imggrande.setImageBitmap(sel);
+        img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                abrir_itinerario();
+            }
+        });
+        float alto = sel.getHeight();
+        float ancho = sel.getWidth();
+        float escala = alto / ancho;
+        if (escala > 1) {
+            imggrande.setScaleX(escala);
+            imggrande.setScaleY(escala);
+        }
+        int maxX = (int) ((imggrande.getWidth() / 2) - (Resources.getSystem().getDisplayMetrics().widthPixels / 2));
+        int maxY = (int) ((imggrande.getHeight() / 2) - (Resources.getSystem().getDisplayMetrics().heightPixels / 2));
+        final int maxIzquierda = (maxX * -1);
+        final int maxDerecha = maxX;
+        final int maxArriba = (maxY * -1);
+        final int maxAbajo = maxY;
+        imggrande.setScrollY(maxAbajo);
+        imggrande.setOnTouchListener(new View.OnTouchListener()
+        {
+            float antcoordX;
+            float antcoordY;
+            int totalX;
+            int totalY;
+            int scrollByX;
+            int scrollByY;
+            public boolean onTouch(View view, MotionEvent event)
+            {
+                float coordX;
+                float coordY;
+                switch (event.getAction())
+                {
+                    case MotionEvent.ACTION_DOWN:
+                        antcoordX = event.getX();
+                        antcoordY = event.getY();
+                        break;
+
+                    case MotionEvent.ACTION_MOVE:
+                        coordX = event.getX();
+                        coordY = event.getY();
+                        scrollByX = (int)(antcoordX - coordX);
+                        scrollByY = (int)(antcoordY - coordY);
+                        /*if (coordX < antcoordX)
+                        {
+                            if (totalX == maxIzquierda)
+                            {
+                                scrollByX = 0;
+                            }
+                            if (totalX > maxIzquierda)
+                            {
+                                totalX = totalX + scrollByX;
+                            }
+                            if (totalX < maxIzquierda)
+                            {
+                                scrollByX = maxIzquierda - (totalX - scrollByX);
+                                totalX = maxIzquierda;
+                            }
+                        }
+                        if (coordX < antcoordX)
+                        {
+                            if (totalX == maxDerecha)
+                            {
+                                scrollByX = 0;
+                            }
+                            if (totalX < maxDerecha)
+                            {
+                                totalX = totalX + scrollByX;
+                            }
+                            if (totalX > maxDerecha)
+                            {
+                                scrollByX = maxDerecha - (totalX - scrollByX);
+                                totalX = maxDerecha;
+                            }
+                        }
+                        if (coordY > antcoordY)
+                        {
+                            if (totalY == maxArriba)
+                            {
+                                scrollByY = 0;
+                            }
+                            if (totalY > maxArriba)
+                            {
+                                totalY = totalY + scrollByY;
+                            }
+                            if (totalY < maxArriba)
+                            {
+                                scrollByY = maxArriba - (totalY - scrollByY);
+                                totalY = maxArriba;
+                            }
+                        }
+                        if (coordY < antcoordY)
+                        {
+                            if (totalY == maxAbajo)
+                            {
+                                scrollByY = 0;
+                            }
+                            if (totalY < maxAbajo)
+                            {
+                                totalY = totalY + scrollByY;
+                            }
+                            if (totalY > maxAbajo)
+                            {
+                                scrollByY = maxAbajo - (totalY - scrollByY);
+                                totalY = maxAbajo;
+                            }
+                        }*/
+                        imggrande.scrollBy(scrollByX, scrollByY);
+                        antcoordX = coordX;
+                        antcoordY = coordY;
+                        break;
+                }
+                return true;
+            }
+        });
         Log.e("Parseo",bmp.toString() + "\n" + "seleccionado " + seleccion + "; " + bmp.get(seleccion));
     }
     private void cargar_imagenes(String url1,String url2){
@@ -324,6 +447,25 @@ public class MainActivityLinea extends Activity {
             new DownloadImageTask().execute(new String[]{url2, "1"});
         }
         new DownloadImageTask();
+    }
+    private void abrir_itinerario(){
+        try{
+            FrameLayout superpuesto = (FrameLayout) findViewById(R.id.layoutsuperpuesto);
+            superpuesto.setVisibility(View.VISIBLE);
+            ImageView cerrar = (ImageView) findViewById(R.id.btncerrar);
+            cerrar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    cerrar_itinerario();
+                }
+            });
+        } catch (Exception e){
+            Log.e("Parseo", e.getMessage());
+        }
+    }
+    private void cerrar_itinerario(){
+        FrameLayout superpuesto = (FrameLayout) findViewById(R.id.layoutsuperpuesto);
+        superpuesto.setVisibility(View.INVISIBLE);
     }
     private class DownloadImageTask extends AsyncTask<String[], Void, Bitmap>
     {

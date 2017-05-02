@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.alba.busessevilla.MainActivity1"
-    android:background="@color/fondo">
+    android:background="@drawable/pantalla">
 
     <TextView
         android:id="@+id/infoTextView"
@@ -38,7 +38,7 @@
         app:layout_constraintTop_toBottomOf="@+id/infoTextView"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:background="@color/colorIcons"
+        android:background="@drawable/borde"
         app:layout_constraintHorizontal_bias="0.497">
 
         <Spinner

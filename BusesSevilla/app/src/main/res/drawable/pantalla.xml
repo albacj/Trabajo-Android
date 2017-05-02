@@ -1,0 +1,8 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:drawable="@drawable/fondo_pantalla" />
+    <item android:drawable="@drawable/trama_pantalla" />
+    <item android:drawable="@drawable/borde_pantalla" />
+
+</layer-list>
+

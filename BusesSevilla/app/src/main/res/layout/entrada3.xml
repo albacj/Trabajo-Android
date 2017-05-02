@@ -28,6 +28,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
+            android:textAllCaps="false"
             android:text=""
             android:textAlignment="center"
             android:textSize="16dp" />
