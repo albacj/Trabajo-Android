@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckedTextView;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -59,6 +60,8 @@ public class MainActivity1 extends Activity {
         texto2.setVisibility(View.INVISIBLE);
         ImageView imglineas = (ImageView) findViewById(R.id.imglineas);
         imglineas.setVisibility(View.INVISIBLE);
+        FrameLayout framelayout = (FrameLayout) findViewById(R.id.FrameView);
+        framelayout.setVisibility(View.INVISIBLE);
         Spinner puebloSpinner = (Spinner)findViewById(R.id.puebloSpinner);
         puebloSpinner.setVisibility(View.INVISIBLE);
         ProgressBar progreso2 = (ProgressBar) findViewById(R.id.progreso2);
@@ -105,6 +108,8 @@ public class MainActivity1 extends Activity {
         imglineas.setVisibility(View.VISIBLE);
         TextView texto2 = (TextView) findViewById(R.id.infoLineasTextView);
         texto2.setVisibility(View.VISIBLE);
+        FrameLayout framelayout = (FrameLayout) findViewById(R.id.FrameView);
+        framelayout.setVisibility(View.VISIBLE);
         puebloSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
             @Override
             public void onItemSelected(AdapterView<?> adapter, View view,
