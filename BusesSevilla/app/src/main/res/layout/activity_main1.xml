@@ -6,7 +6,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.alba.busessevilla.MainActivity1">
+    tools:context="com.example.alba.busessevilla.MainActivity1"
+    android:background="@color/fondo">
 
     <TextView
         android:id="@+id/infoTextView"
@@ -25,20 +26,28 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Spinner
-        android:id="@+id/puebloSpinner"
+    <FrameLayout
+        android:id="@+id/FrameView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="19dp"
-        android:textColor="@color/colorPrimary"
         app:layout_constraintLeft_toLeftOf="@+id/infoTextView"
         app:layout_constraintRight_toRightOf="@+id/infoTextView"
         app:layout_constraintTop_toBottomOf="@+id/infoTextView"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        app:layout_constraintHorizontal_bias="0.497" />
+        android:background="@color/colorIcons"
+        app:layout_constraintHorizontal_bias="0.497">
+
+        <Spinner
+            android:id="@+id/puebloSpinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorPrimary" />
+
+    </FrameLayout>
 
     <TextView
         android:id="@+id/infoLineasTextView"
@@ -51,26 +60,39 @@
         android:textAlignment="center"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="18sp"
-        app:layout_constraintLeft_toLeftOf="@+id/puebloSpinner"
-        app:layout_constraintRight_toRightOf="@+id/puebloSpinner"
-        app:layout_constraintTop_toBottomOf="@+id/puebloSpinner"
+        app:layout_constraintLeft_toLeftOf="@+id/FrameView"
+        app:layout_constraintRight_toRightOf="@+id/FrameView"
+        app:layout_constraintTop_toBottomOf="@+id/FrameView"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         app:layout_constraintHorizontal_bias="0.504" />
 
+    <ImageView
+        android:id="@+id/imglineas"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/lineas"
+        android:layout_marginRight="8dp"
+        android:visibility="invisible"
+        app:layout_constraintRight_toRightOf="@+id/lineasListView"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="@+id/lineasListView"
+        app:layout_constraintBottom_toTopOf="@+id/lineasListView"
+        android:layout_marginTop="80dp" />
+
     <ListView
         android:id="@+id/lineasListView"
         android:layout_width="305dp"
-        android:layout_height="329dp"
+        android:layout_height="305dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginTop="13dp"
+        android:layout_marginTop="70dp"
+        android:background="@drawable/borde"
+        android:visibility="invisible"
         app:layout_constraintHorizontal_bias="0.125"
         app:layout_constraintLeft_toLeftOf="@+id/infoLineasTextView"
         app:layout_constraintRight_toRightOf="@+id/infoLineasTextView"
         app:layout_constraintTop_toBottomOf="@+id/infoLineasTextView"
-        android:layout_marginEnd="8dp"
-        android:visibility="invisible"
-        android:background="@drawable/borde"
         tools:layout_editor_absoluteX="25dp" />
 
     <ProgressBar
@@ -81,7 +103,8 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="64dp" />
 
     <ProgressBar
         android:id="@+id/progreso2"

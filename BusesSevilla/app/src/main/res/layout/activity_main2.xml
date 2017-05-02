@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.alba.busessevilla.MainActivity2">
+    tools:context="com.example.alba.busessevilla.MainActivity2"
+    android:background="@color/fondo">
 
     <TextView
         android:id="@+id/nombrelinea"
@@ -14,11 +15,11 @@
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="42dp"
+        android:layout_marginTop="16dp"
         android:text=""
         android:textAlignment="center"
         android:textColor="@color/colorPrimaryDark"
-        android:textSize="24sp"
+        android:textSize="18sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -27,8 +28,8 @@
         android:id="@+id/infoTiempoTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp"
         android:layout_marginTop="20dp"
         android:text=""
         android:textAlignment="center"
@@ -40,16 +41,30 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp" />
 
+    <ImageView
+        android:id="@+id/imgtiempos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/tiempoListView"
+        app:layout_constraintLeft_toLeftOf="@+id/tiempoListView"
+        app:layout_constraintRight_toRightOf="@+id/tiempoListView"
+        android:src="@mipmap/tiempo"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp" />
+
     <ListView
         android:id="@+id/tiempoListView"
         android:layout_width="300dp"
-        android:layout_height="160dp"
+        android:layout_height="150dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/borde"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.505"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -64,10 +79,13 @@
         android:layout_height="160dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nombrelinea" />
+        app:layout_constraintTop_toBottomOf="@+id/nombrelinea"
+        app:layout_constraintHorizontal_bias="0.505"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp" />
 
 </android.support.constraint.ConstraintLayout>
 

@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Switch;
@@ -231,6 +232,10 @@ public class MainActivityLinea extends Activity {
         switchidavuelta.setVisibility(View.VISIBLE);
         ListView paradaslv = (ListView)findViewById(R.id.paradasListView);
         paradaslv.setVisibility(View.VISIBLE);
+        ImageView imgnoticias = (ImageView) findViewById(R.id.imgnoticias);
+        imgnoticias.setVisibility(View.VISIBLE);
+        LinearLayout noticias = (LinearLayout) findViewById(R.id.linearLayout);
+        noticias.setVisibility(View.VISIBLE);
         paradaslv.setAdapter(new Lista_adaptador(this, R.layout.entrada3, seleccionado){
             @Override
             public void onEntrada(Object entrada, View view) {

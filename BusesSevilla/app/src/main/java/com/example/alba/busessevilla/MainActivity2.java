@@ -65,7 +65,7 @@ public class MainActivity2 extends Activity implements OnMapReadyCallback {
                 }else{
                     t = t.concat(String.valueOf(m) + getText(R.string.minutos));
                 }
-                datos.add(new Lista_entrada2(t + "\n(Sale a las " + elemento + ")"));
+                datos.add(new Lista_entrada2(t));
             }
         }
         if (datos.isEmpty()){

@@ -19,7 +19,7 @@
     <string name="seleccion_municipio">Please choose where you wish to go:</string>
     <string name="sin_estimaciones">Without estimations.</string>
     <string name="info_tiempo">"Estimated time of departure from "</string>
-    <string name="seleccion_linea">The following bus lines are heading for destination.\nPlease choose according to the town of origin.</string>
+    <string name="seleccion_linea">The following bus lines are heading for your destination.</string>
     <string name="enlace"><a href="http://www.consorciotransportes-sevilla.com/">For further information tap here.</a></string>
     <string name="cambio_idioma">You have selected English.</string>
     <string name="sin_navegador">No web browser can handle this request.</string>

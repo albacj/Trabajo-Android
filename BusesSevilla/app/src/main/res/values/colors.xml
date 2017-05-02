@@ -8,4 +8,7 @@
     <color name="colorSecondaryText">#757575</color>
     <color name="colorIcons">#ffffff</color>
     <color name="colorDivider">#BDBDBD</color>
+    <color name="fondo">#c9ebcd</color>
+    <color name="fondo_views">#c9e7ff</color>
+    <color name="borde_views">#2d7621</color>
 </resources>

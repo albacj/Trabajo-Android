@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckedTextView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
@@ -56,6 +57,8 @@ public class MainActivity1 extends Activity {
         texto1.setVisibility(View.INVISIBLE);
         TextView texto2 = (TextView) findViewById(R.id.infoLineasTextView);
         texto2.setVisibility(View.INVISIBLE);
+        ImageView imglineas = (ImageView) findViewById(R.id.imglineas);
+        imglineas.setVisibility(View.INVISIBLE);
         Spinner puebloSpinner = (Spinner)findViewById(R.id.puebloSpinner);
         puebloSpinner.setVisibility(View.INVISIBLE);
         ProgressBar progreso2 = (ProgressBar) findViewById(R.id.progreso2);
@@ -98,6 +101,8 @@ public class MainActivity1 extends Activity {
         puebloSpinner.setVisibility(View.VISIBLE);
         TextView texto1 = (TextView) findViewById(R.id.infoTextView);
         texto1.setVisibility(View.VISIBLE);
+        ImageView imglineas = (ImageView) findViewById(R.id.imglineas);
+        imglineas.setVisibility(View.VISIBLE);
         TextView texto2 = (TextView) findViewById(R.id.infoLineasTextView);
         texto2.setVisibility(View.VISIBLE);
         puebloSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
@@ -108,6 +113,8 @@ public class MainActivity1 extends Activity {
                 String tag = "Parseo";
                 String seleccionado = mapa_municipios.get(puebloSpinner.getSelectedItem());
                 if (seleccionado!= null){
+                    ImageView imglineas = (ImageView) findViewById(R.id.imglineas);
+                    imglineas.setVisibility(View.INVISIBLE);
                     ListView lista = (ListView) findViewById(R.id.lineasListView);
                     lista.setVisibility(View.INVISIBLE);
                     ProgressBar progreso2 = (ProgressBar) findViewById(R.id.progreso2);
@@ -132,6 +139,8 @@ public class MainActivity1 extends Activity {
         ProgressBar progreso2 = (ProgressBar) findViewById(R.id.progreso2);
         progreso2.setVisibility(View.INVISIBLE);
         String tag = "Parseo";
+        ImageView imglineas = (ImageView) findViewById(R.id.imglineas);
+        imglineas.setVisibility(View.VISIBLE);
         ListView lista = (ListView) findViewById(R.id.lineasListView);
         lista.setVisibility(View.VISIBLE);
         Collections.sort(lista_lineas,new Comparator<Lista_entrada>() {
