@@ -96,7 +96,7 @@
         tools:layout_editor_absoluteX="25dp" />
 
     <ProgressBar
-        android:id="@+id/progreso1"
+        android:id="@+id/progreso"
         style="?android:attr/progressBarStyleLarge"
         android:layout_width="48dp"
         android:layout_height="wrap_content"
@@ -105,15 +105,5 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginTop="64dp" />
-
-    <ProgressBar
-        android:id="@+id/progreso2"
-        style="?android:attr/progressBarStyleLarge"
-        android:layout_width="48dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="@+id/lineasListView"
-        app:layout_constraintBottom_toBottomOf="@+id/lineasListView"
-        app:layout_constraintLeft_toLeftOf="@id/lineasListView"
-        app:layout_constraintRight_toRightOf="@+id/lineasListView" />
 
 </android.support.constraint.ConstraintLayout>

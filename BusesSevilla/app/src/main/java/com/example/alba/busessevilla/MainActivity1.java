@@ -64,16 +64,14 @@ public class MainActivity1 extends Activity {
         framelayout.setVisibility(View.INVISIBLE);
         Spinner puebloSpinner = (Spinner)findViewById(R.id.puebloSpinner);
         puebloSpinner.setVisibility(View.INVISIBLE);
-        ProgressBar progreso2 = (ProgressBar) findViewById(R.id.progreso2);
-        progreso2.setVisibility(View.INVISIBLE);
         url = "http://api.ctan.es/v1/Consorcios/1/municipios";
         new ParseoMunicipio().execute();
     }
 
     private void cargarListaMunicipios (){
 
-        ProgressBar progreso1 = (ProgressBar) findViewById(R.id.progreso1);
-        progreso1.setVisibility(View.INVISIBLE);
+        ProgressBar progreso = (ProgressBar) findViewById(R.id.progreso);
+        progreso.setVisibility(View.INVISIBLE);
         String tag = "Parseo";
         JSONArray municipios = new JSONArray();
         try{
@@ -122,8 +120,8 @@ public class MainActivity1 extends Activity {
                     imglineas.setVisibility(View.INVISIBLE);
                     ListView lista = (ListView) findViewById(R.id.lineasListView);
                     lista.setVisibility(View.INVISIBLE);
-                    ProgressBar progreso2 = (ProgressBar) findViewById(R.id.progreso2);
-                    progreso2.setVisibility(View.VISIBLE);
+                    ProgressBar progreso = (ProgressBar) findViewById(R.id.progreso);
+                    progreso.setVisibility(View.VISIBLE);
                     url = url.concat(seleccionado + "/nucleos");
                     new ParseoLinea().execute();
                 } else {
@@ -141,8 +139,8 @@ public class MainActivity1 extends Activity {
 
     private void cargarListaLineas(){
 
-        ProgressBar progreso2 = (ProgressBar) findViewById(R.id.progreso2);
-        progreso2.setVisibility(View.INVISIBLE);
+        ProgressBar progreso = (ProgressBar) findViewById(R.id.progreso);
+        progreso.setVisibility(View.INVISIBLE);
         String tag = "Parseo";
         ImageView imglineas = (ImageView) findViewById(R.id.imglineas);
         imglineas.setVisibility(View.VISIBLE);
@@ -331,10 +329,8 @@ public class MainActivity1 extends Activity {
 
     private void mostraralerta(String mensaje){
         try{
-            ProgressBar progreso1 = (ProgressBar) findViewById(R.id.progreso1);
-            progreso1.setVisibility(View.INVISIBLE);
-            ProgressBar progreso2 = (ProgressBar) findViewById(R.id.progreso2);
-            progreso2.setVisibility(View.INVISIBLE);
+            ProgressBar progreso = (ProgressBar) findViewById(R.id.progreso);
+            progreso.setVisibility(View.INVISIBLE);
             AlertDialog.Builder dialogo = new AlertDialog.Builder(MainActivity1.this);
             dialogo.setTitle(getText(R.string.error0));
             dialogo.setMessage(mensaje);

@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,6 +23,7 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -321,123 +323,127 @@ public class MainActivityLinea extends Activity {
         img.setImageBitmap(sel);
         final ImageView imggrande = (ImageView) findViewById(R.id.recorridoGrande);
         imggrande.setImageBitmap(sel);
-        img.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                abrir_itinerario();
+        if (sel!=null){
+            img.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    abrir_itinerario();
+                }
+            });
+            float alto = sel.getHeight();
+            float ancho = sel.getWidth();
+            float escala = alto / ancho;
+            if (escala > 1) {
+                imggrande.setScaleX(escala);
+                imggrande.setScaleY(escala);
             }
-        });
-        float alto = sel.getHeight();
-        float ancho = sel.getWidth();
-        float escala = alto / ancho;
-        if (escala > 1) {
-            imggrande.setScaleX(escala);
-            imggrande.setScaleY(escala);
-        }
-        int maxX = (int) ((imggrande.getWidth() / 2) - (Resources.getSystem().getDisplayMetrics().widthPixels / 2));
-        int maxY = (int) ((imggrande.getHeight() / 2) - (Resources.getSystem().getDisplayMetrics().heightPixels / 2));
-        final int maxIzquierda = (maxX * -1);
-        final int maxDerecha = maxX;
-        final int maxArriba = (maxY * -1);
-        final int maxAbajo = maxY;
-        imggrande.setScrollY(maxAbajo);
-        imggrande.setOnTouchListener(new View.OnTouchListener()
-        {
-            float antcoordX;
-            float antcoordY;
-            int totalX;
-            int totalY;
-            int scrollByX;
-            int scrollByY;
-            public boolean onTouch(View view, MotionEvent event)
-            {
-                float coordX;
-                float coordY;
-                switch (event.getAction())
-                {
-                    case MotionEvent.ACTION_DOWN:
-                        antcoordX = event.getX();
-                        antcoordY = event.getY();
-                        break;
-
-                    case MotionEvent.ACTION_MOVE:
-                        coordX = event.getX();
-                        coordY = event.getY();
-                        scrollByX = (int)(antcoordX - coordX);
-                        scrollByY = (int)(antcoordY - coordY);
+            Resources res = getResources();
+            BitmapDrawable bt = new BitmapDrawable(res, String.valueOf(imggrande));
+            int bitmapWidth = bt.getIntrinsicWidth();
+            int bitmapHeight = bt.getIntrinsicHeight();
+            int screenWidth = this.getWindowManager().getDefaultDisplay().getWidth();
+            int screenHeight = this.getWindowManager().getDefaultDisplay().getHeight();
+            int maxX = (int) ((bitmapWidth / 2) - (screenWidth / 2));
+            int maxY = (int) ((bitmapHeight / 2) - (screenHeight / 2));
+            final int maxIzquierda = (maxX * -1);
+            final int maxDerecha = maxX;
+            final int maxArriba = (maxY * -1);
+            final int maxAbajo = maxY;
+            imggrande.setOnTouchListener(new View.OnTouchListener() {
+                float antcoordX;
+                float antcoordY;
+                int acumX;
+                int acumY;
+                int scrollByX;
+                int scrollByY;
+                public boolean onTouch(View view, MotionEvent event) {
+                    float coordX;
+                    float coordY;
+                    switch (event.getAction()) {
+                        case MotionEvent.ACTION_DOWN:
+                            antcoordX = event.getX();
+                            antcoordY = event.getY();
+                            break;
+                        case MotionEvent.ACTION_MOVE:
+                            coordX = event.getX();
+                            coordY = event.getY();
+                            scrollByX = (int) (antcoordX - coordX);
+                            scrollByY = (int) (antcoordY - coordY);
                         /*if (coordX < antcoordX)
                         {
-                            if (totalX == maxIzquierda)
+                            if (acumX == maxIzquierda)
                             {
                                 scrollByX = 0;
                             }
-                            if (totalX > maxIzquierda)
+                            if (acumX > maxIzquierda)
                             {
-                                totalX = totalX + scrollByX;
+                                acumX = acumX + scrollByX;
                             }
-                            if (totalX < maxIzquierda)
+                            if (acumX < maxIzquierda)
                             {
-                                scrollByX = maxIzquierda - (totalX - scrollByX);
-                                totalX = maxIzquierda;
+                                scrollByX = maxIzquierda - (acumX - scrollByX);
+                                acumX = maxIzquierda;
                             }
                         }
                         if (coordX < antcoordX)
                         {
-                            if (totalX == maxDerecha)
+                            if (acumX == maxDerecha)
                             {
                                 scrollByX = 0;
                             }
-                            if (totalX < maxDerecha)
+                            if (acumX < maxDerecha)
                             {
-                                totalX = totalX + scrollByX;
+                                acumX = acumX + scrollByX;
                             }
-                            if (totalX > maxDerecha)
+                            if (acumX > maxDerecha)
                             {
-                                scrollByX = maxDerecha - (totalX - scrollByX);
-                                totalX = maxDerecha;
+                                scrollByX = maxDerecha - (acumX - scrollByX);
+                                acumX = maxDerecha;
                             }
                         }
                         if (coordY > antcoordY)
                         {
-                            if (totalY == maxArriba)
+                            if (acumY == maxArriba)
                             {
                                 scrollByY = 0;
                             }
-                            if (totalY > maxArriba)
+                            if (acumY > maxArriba)
                             {
-                                totalY = totalY + scrollByY;
+                                acumY = acumY + scrollByY;
                             }
-                            if (totalY < maxArriba)
+                            if (acumY < maxArriba)
                             {
-                                scrollByY = maxArriba - (totalY - scrollByY);
-                                totalY = maxArriba;
+                                scrollByY = maxArriba - (acumY - scrollByY);
+                                acumY = maxArriba;
                             }
                         }
                         if (coordY < antcoordY)
                         {
-                            if (totalY == maxAbajo)
+                            if (acumY == maxAbajo)
                             {
                                 scrollByY = 0;
                             }
-                            if (totalY < maxAbajo)
+                            if (acumY < maxAbajo)
                             {
-                                totalY = totalY + scrollByY;
+                                acumY = acumY + scrollByY;
                             }
-                            if (totalY > maxAbajo)
+                            if (acumY > maxAbajo)
                             {
-                                scrollByY = maxAbajo - (totalY - scrollByY);
-                                totalY = maxAbajo;
+                                scrollByY = maxAbajo - (acumY - scrollByY);
+                                acumY = maxAbajo;
                             }
                         }*/
-                        imggrande.scrollBy(scrollByX, scrollByY);
-                        antcoordX = coordX;
-                        antcoordY = coordY;
-                        break;
+                            imggrande.scrollBy(scrollByX, scrollByY);
+                            antcoordX = coordX;
+                            antcoordY = coordY;
+                            break;
+                    }
+                    return true;
                 }
-                return true;
-            }
-        });
-        Log.e("Parseo",bmp.toString() + "\n" + "seleccionado " + seleccion + "; " + bmp.get(seleccion));
+            });
+            Log.e("Parseo", bmp.toString() + "\n" + "seleccionado " + seleccion + "; " + bmp.get(seleccion));
+
+        }
     }
     private void cargar_imagenes(String url1,String url2){
         if (!url1.equals("")){
