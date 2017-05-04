@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Buses Sevilla</string>
-    <string name="bienvenida">Bienvenido/a a la aplicación Buses Sevilla.\nAquí podrá consultar los horarios de cualquier línea de autobús de la provincia de Sevilla.</string>
+    <string name="bienvenida">Bienvenido/a a Buses Sevilla.\nAquí podrá consultar los horarios de cualquier línea de autobús de la provincia de Sevilla.</string>
     <string name="boton_consulta">Consultar</string>
     <string name="enlace">Para cualquier duda, pulse aquí.</string>
     <string name="seleccion_municipio">Seleccione dónde desea ir:</string>
