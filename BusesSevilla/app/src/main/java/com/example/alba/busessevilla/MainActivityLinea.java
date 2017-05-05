@@ -96,6 +96,14 @@ public class MainActivityLinea extends Activity {
                 imgVuelta = datos_linea.getString("termometroVuelta");
             }
             pmr = datos_linea.getString("pmr");
+            switch (pmr){
+                case "No adaptada a personas con movilidad reducida":
+                    pmr = getString(R.string.pmr_no);
+                    break;
+                case "Adaptada a personas con movilidad reducida":
+                    pmr = getString(R.string.pmr_si);
+                    break;
+            }
         } catch (Exception e) {
             Log.e(tag, "Error al leer el JSON" + e);
         }
@@ -192,9 +200,9 @@ public class MainActivityLinea extends Activity {
         //Leyendo noticias de la línea.
         if (tieneNoticias.equals("1")) {
             if (noticias!=null){
-                for (int i = 0; i > noticias.length(); i++) {
+                for (int i = 0; i < noticias.length(); i++) {
                     try {
-                        boletin.add(datos_linea.getString("titulo"));
+                        boletin.add(noticias.getJSONObject(i).getString("titulo"));
                     } catch (Exception e) {
                         Log.e(tag, "Error al leer el JSON" + e);
                     }
@@ -219,7 +227,7 @@ public class MainActivityLinea extends Activity {
         for (String elemento: boletin){
             texto = texto.concat(elemento + "\n");
         }
-        txtnoticias.setText(pmr + ".\n" + texto);
+        txtnoticias.setText(pmr + "\n" + texto);
         ArrayList<Parada> seleccionado = new ArrayList<>();
         Switch switchidavuelta = (Switch) findViewById(R.id.switchIdaVuelta);
         switch (seleccion) {
@@ -349,12 +357,10 @@ public class MainActivityLinea extends Activity {
             }
             imggrande.setScaleX(escalaX);
             imggrande.setScaleY(escalaY);
-            Log.e("Parseo","Escala:" + String.valueOf(escalaX)+" "+String.valueOf(escalaY));
             final int maxIzquierda = (int) -(1*((float)ancho_pantalla / escalaX)/1.7)/2 + 18;
             final int maxDerecha = -maxIzquierda + 18;
             final int maxArriba = (int) -((float)alto/ancho*((float)alto_pantalla / escalaY)/1.7)/2 - 18;
             final int maxAbajo = -maxArriba - 18;
-            Log.e("Parseo",String.valueOf(maxIzquierda)+" "+String.valueOf(maxArriba));
             imggrande.scrollTo(maxIzquierda,maxArriba);
             imggrande.setOnTouchListener(new View.OnTouchListener() {
                 float antcoordX;
@@ -477,7 +483,7 @@ public class MainActivityLinea extends Activity {
             String jsonStr6 = "";
             String url1 = "http://api.ctan.es/v1/Consorcios/1/lineas/" + id_linea;
             String url2 = "http://api.ctan.es/v1/Consorcios/1/horarios_lineas?&idLinea=" + id_linea + "&idFrecuencia=" + frecuencia;
-            String url3 = "http://api.ctan.es/v1/Consorcios/1/lineas/" + id_linea + "/noticias";
+            String url3 = "http://api.ctan.es/v1/Consorcios/1/lineas/" + id_linea + "/noticias?lang=ES";
             String url4 = "http://api.ctan.es/v1/Consorcios/1/lineas/" + id_linea + "/paradas";
             String url5 = "http://api.ctan.es/v1/Consorcios/1/lineas/" + id_linea + "/bloques?&sentido=1";
             String url6 = "http://api.ctan.es/v1/Consorcios/1/lineas/" + id_linea + "/bloques?&sentido=2";

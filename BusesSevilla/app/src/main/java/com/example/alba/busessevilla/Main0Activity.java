@@ -36,10 +36,16 @@ public class Main0Activity extends Activity {
         final HashMap<Integer, String> mapa_idiomas = new HashMap<>();
         mapa_idiomas.put(R.mipmap.es, "es");
         mapa_idiomas.put(R.mipmap.en, "en");
+        mapa_idiomas.put(R.mipmap.fr, "fr");
+        mapa_idiomas.put(R.mipmap.it, "it");
+        mapa_idiomas.put(R.mipmap.ja, "ja");
         ArrayList<Integer> lista_idiomas = new ArrayList<>();
         lista_idiomas.add(R.mipmap.idioma);
         lista_idiomas.add(R.mipmap.es);
         lista_idiomas.add(R.mipmap.en);
+        lista_idiomas.add(R.mipmap.fr);
+        lista_idiomas.add(R.mipmap.it);
+        lista_idiomas.add(R.mipmap.ja);
         Lista_adaptador adapter_idiomas = new Lista_adaptador(this, R.layout.entrada4, lista_idiomas) {
             @Override
             public void onEntrada(Object entrada, View view) {

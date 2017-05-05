@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bienvenida">"Benvenuto/a sull'app di Bus Sevilla.\nQui lei potrà consultare gli orari di qualsiasi linea nella provincia di Siviglia."</string>
+    <string name="boton_consulta">Consultare</string>
+    <string name="enlace">Per ogni dubbio, prema qui.</string>
+    <string name="seleccion_municipio">Selezioni dove vuole andare:</string>
+    <string name="seleccion_linea">Scelga una linea per arrivare al suo destino.</string>
+    <string name="ida">ANDATA</string>
+    <string name="vuelta">RITORNO</string>
+    <string name="info">Informazione sulla linea:</string>
+    <string name="sin_servicios">Non ci sono servizi disponibili</string>
+    <string name="sin_noticias">Non ci sono notizie alcune riguardo questa linea.</string>
+    <string name="hora">" ora "</string>
+    <string name="horas">" ore "</string>
+    <string name="minuto">" minuto"</string>
+    <string name="minutos">" minuti"</string>
+    <string name="sin_estimaciones">Senza stimazioni.</string>
+    <string name="info_tiempo">"Tempo aprossimato di partenza dalla fermata "</string>
+    <string name="error0">Errore di conessione</string>
+    <string name="error1">Per favore, riprovare nuovamente dopo un attimo.</string>
+    <string name="error2">Per favore, verificare la sua conessione ad Internet.</string>
+    <string name="ok">Accetta</string>
+    <string name="cambio_idioma">Ha selezionato italiano.</string>
+    <string name="sin_navegador">Non si è trovato nessun web browser per questa richiesta.</string>
+    <string name="info_tiempo2">:</string>
+    <string name="pmr_no">Non adatto ai disabili.</string>
+    <string name="pmr_si">Adatto ai disabili.</string>
+</resources>

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Buses Sevilla</string>
     <string name="bienvenida">Welcome to Buses Sevilla.\nHere you can quickly check the bus schedules for each of the bus routes within the province of Seville.</string>
     <string name="boton_consulta">Check</string>
     <string name="hora">" hour "</string>
@@ -23,4 +22,7 @@
     <string name="enlace">For further information tap here.</string>
     <string name="cambio_idioma">You have selected English.</string>
     <string name="sin_navegador">No web browser can handle this request.</string>
+    <string name="pmr_no">Not adapted for persons with reduced mobility.</string>
+    <string name="pmr_si">Adapted for persons with reduced mobility.</string>
+    <string name="info_tiempo2">:</string>
 </resources>

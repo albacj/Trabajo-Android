@@ -75,7 +75,7 @@ public class MainActivity2 extends Activity implements OnMapReadyCallback {
         TextView textolinea = (TextView) findViewById(R.id.nombrelinea);
         textolinea.setText(nombre_linea);
         TextView textoparada = (TextView) findViewById(R.id.infoTiempoTextView);
-        textoparada.setText(getText(R.string.info_tiempo) + nombre_parada + ":");
+        textoparada.setText(getText(R.string.info_tiempo) + nombre_parada + getText(R.string.info_tiempo2));
         ListView lista = (ListView) findViewById(R.id.tiempoListView);
         lista.setAdapter(new Lista_adaptador2(this, R.layout.entrada2, datos){
             @Override

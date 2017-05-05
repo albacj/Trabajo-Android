@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Buses Sevilla</string>
+    <string name="app_name" translatable="false">Buses Sevilla</string>
     <string name="bienvenida">Bienvenido/a a Buses Sevilla.\nAquí podrá consultar los horarios de cualquier línea de autobús de la provincia de Sevilla.</string>
     <string name="boton_consulta">Consultar</string>
     <string name="enlace">Para cualquier duda, pulse aquí.</string>
@@ -10,6 +10,8 @@
     <string name="info">Información de la línea:</string>
     <string name="sin_servicios">No hay servicios disponibles</string>
     <string name="sin_noticias">No hay noticias que mostrar acerca de esta línea.</string>
+    <string name="pmr_si">Adaptada a personas con movilidad reducida.</string>
+    <string name="pmr_no">No adaptada a personas con movilidad reducida.</string>
     <string name="hora">" hora y "</string>
     <string name="horas">" horas y "</string>
     <string name="minuto">" minuto"</string>
@@ -22,5 +24,6 @@
     <string name="ok">Aceptar</string>
     <string name="cambio_idioma">Ha seleccionado español.</string>
     <string name="sin_navegador">No se encontró navegador web para esta petición.</string>
+    <string name="info_tiempo2">:</string>
 
 </resources>

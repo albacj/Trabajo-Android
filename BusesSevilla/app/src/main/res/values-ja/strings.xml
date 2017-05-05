@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bienvenida">Buses Sevillaへようこそ。こちらではセビリア県の路線バスの時刻表を確認することができます。</string>
+    <string name="boton_consulta">チェック</string>
+    <string name="enlace">詳細については、ここをタップしてください。</string>
+    <string name="seleccion_municipio">行きたい町を選んでください。</string>
+    <string name="seleccion_linea">次のバス路線がご目的地へ向かって進みます。</string>
+    <string name="ida">出発</string>
+    <string name="vuelta">戻り</string>
+    <string name="info">バス路線の情報：</string>
+    <string name="sin_servicios">バス路線はご利用できません</string>
+    <string name="sin_noticias">ニュースはありません。</string>
+    <string name="pmr_si">身体障害者用です。</string>
+    <string name="pmr_no">身体障害者用ではありません。</string>
+    <string name="hora">"時間"</string>
+    <string name="horas">"時間"</string>
+    <string name="minuto">"分"</string>
+    <string name="minutos">"分"</string>
+    <string name="sin_estimaciones">到着予定時刻はご利用できません。</string>
+    <string name="info_tiempo2">"バス停から到着予定時刻："</string>
+    <string name="error0">エラー</string>
+    <string name="error1">サーバーとの通信で問題が発生しました。後でもう一度お試しください。</string>
+    <string name="error2">インターネット接続を確認してください。</string>
+    <string name="ok">OK</string>
+    <string name="cambio_idioma">日本語が選択されました。</string>
+    <string name="sin_navegador">このリンクを開くアプリが見つかりませんでした。</string>
+    <string name="info_tiempo"></string>
+
+</resources>
