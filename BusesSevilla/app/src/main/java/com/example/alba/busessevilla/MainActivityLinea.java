@@ -24,7 +24,6 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -69,6 +68,20 @@ public class MainActivityLinea extends Activity {
         mapa_municipios = (HashMap<String, String>) actlinea.getExtras().getSerializable("mapa_municipios");
         Switch swit = (Switch) findViewById(R.id.switchIdaVuelta);
         swit.setVisibility(View.INVISIBLE);
+        switch (getResources().getConfiguration().locale.getDisplayLanguage()){
+            case "English":
+                swit.setThumbTextPadding((int) (17 * getResources().getDisplayMetrics().density));
+                break;
+            case "italiano":
+                swit.setThumbTextPadding((int) (26 * getResources().getDisplayMetrics().density));
+                break;
+            case "日本語":
+                swit.setThumbTextPadding((int) (40 * getResources().getDisplayMetrics().density));
+                break;
+            default:
+                swit.setThumbTextPadding((int) (29 * getResources().getDisplayMetrics().density));
+                break;
+        }
         bmp.clear();
         new ParseoDatosLinea().execute();
         Log.e("Parseo",id_linea);

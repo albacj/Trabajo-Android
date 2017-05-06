@@ -71,7 +71,6 @@
                 android:layout_height="wrap_content"
                 android:textOff="@string/ida"
                 android:textOn="@string/vuelta"
-                android:thumbTextPadding="29dp"
                 android:thumb="@color/borde"
                 android:visibility="invisible"
                 app:layout_constraintBottom_toBottomOf="parent"
