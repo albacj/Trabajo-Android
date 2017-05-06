@@ -34,7 +34,7 @@ public class Main0Activity extends Activity {
     public void cargaSpinnerIdioma(){
         final Spinner idiomaspinner = (Spinner) findViewById(R.id.idiomaSpinner);
         final HashMap<Integer, String> mapa_idiomas = new HashMap<>();
-        mapa_idiomas.put(R.mipmap.es, "es");
+        mapa_idiomas.put(R.mipmap.es, "es_ES");
         mapa_idiomas.put(R.mipmap.en, "en");
         mapa_idiomas.put(R.mipmap.fr, "fr");
         mapa_idiomas.put(R.mipmap.it, "it");

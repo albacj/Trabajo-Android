@@ -17,6 +17,7 @@
     <string name="minuto">"分"</string>
     <string name="minutos">"分"</string>
     <string name="sin_estimaciones">到着予定時刻はご利用できません。</string>
+    <string name="info_tiempo">""</string>
     <string name="info_tiempo2">"バス停から到着予定時刻："</string>
     <string name="error0">エラー</string>
     <string name="error1">サーバーとの通信で問題が発生しました。後でもう一度お試しください。</string>
@@ -24,6 +25,5 @@
     <string name="ok">OK</string>
     <string name="cambio_idioma">日本語が選択されました。</string>
     <string name="sin_navegador">このリンクを開くアプリが見つかりませんでした。</string>
-    <string name="info_tiempo"></string>
 
 </resources>

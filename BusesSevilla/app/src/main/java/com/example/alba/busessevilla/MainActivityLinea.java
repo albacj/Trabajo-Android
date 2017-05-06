@@ -7,7 +7,10 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
+import android.support.annotation.RequiresApi;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -21,6 +24,7 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -38,6 +42,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 public class MainActivityLinea extends Activity {
 
@@ -49,6 +54,7 @@ public class MainActivityLinea extends Activity {
     JSONArray datos_paradas;
     JSONArray bloques_ida;
     JSONArray bloques_vuelta;
+    TextToSpeech tt;
     HashMap<String, String> mapa_municipios = new HashMap<String, String>();
     ArrayList<Parada> paradas_ida = new ArrayList<>();
     ArrayList<Parada> paradas_vuelta = new ArrayList<>();
@@ -82,6 +88,7 @@ public class MainActivityLinea extends Activity {
         ProgressBar progreso = (ProgressBar) findViewById(R.id.progreso);
         progreso.setVisibility(View.INVISIBLE);
         List<String> boletin = new ArrayList<>();
+        List<String> boletinext = new ArrayList<>();
         //Leyendo datos de la línea.
         try {
             nombre = datos_linea.getString("nombre");
@@ -202,7 +209,8 @@ public class MainActivityLinea extends Activity {
             if (noticias!=null){
                 for (int i = 0; i < noticias.length(); i++) {
                     try {
-                        boletin.add(noticias.getJSONObject(i).getString("titulo"));
+                        boletin.add(noticias.getJSONObject(i).getString("titulo") + ".");
+                        boletinext.add(noticias.getJSONObject(i).getString("resumen") + ".");
                     } catch (Exception e) {
                         Log.e(tag, "Error al leer el JSON" + e);
                     }
@@ -220,14 +228,63 @@ public class MainActivityLinea extends Activity {
         TextView txtoperador = (TextView) findViewById(R.id.operador);
         TextView txtcabecera = (TextView) findViewById(R.id.cabeceranoticias);
         TextView txtnoticias = (TextView) findViewById(R.id.noticias);
+        TextView txtboletinext = (TextView) findViewById(R.id.boletinext);
         txtnombre.setText(nombre);
         txtoperador.setText(operador);
         txtcabecera.setText(getString(R.string.info));
         String texto = "";
-        for (String elemento: boletin){
-            texto = texto.concat(elemento + "\n");
+        String texto2 = "";
+        for (int i=0; i < boletin.size(); i++){
+            texto = texto.concat(boletin.get(i) + "\n");
+            if (!boletinext.isEmpty()) {
+                texto2 = texto2.concat(boletin.get(i) + "\n" + boletinext.get(i) + "\n");
+            }
         }
         txtnoticias.setText(pmr + "\n" + texto);
+        if (!boletinext.isEmpty()) {
+            txtboletinext.setText(texto2);
+            LinearLayout noticiaslayout = (LinearLayout) findViewById(R.id.linearLayout);
+            noticiaslayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    FrameLayout superpuesto2 = (FrameLayout) findViewById(R.id.layoutsuperpuesto2);
+                    superpuesto2.setVisibility(View.VISIBLE);
+                    superpuesto2.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {}
+                    });
+                    tt = new TextToSpeech(getApplicationContext(),new TextToSpeech.OnInitListener()
+                    {
+                        public void onInit(int status)
+                        {
+                            if(status!=TextToSpeech.ERROR)
+                                tt.setLanguage(new Locale("es_ES"));
+                        }
+                    });
+                    ImageView cerrar = (ImageView) findViewById(R.id.btncerrar2);
+                    cerrar.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            tt.stop();
+                            cerrar_noticias();
+                        }
+                    });
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        ImageView hablar = (ImageView) findViewById(R.id.habla);
+                        hablar.setVisibility(View.VISIBLE);
+                        hablar.setOnClickListener(new View.OnClickListener() {
+                            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+                            @Override
+                            public void onClick(View v) {
+                                TextView txtboletinext = (TextView) findViewById(R.id.boletinext);
+                                String texto = txtboletinext.getText().toString();
+                                tt.speak(texto,TextToSpeech.QUEUE_FLUSH,null,null);
+                            }
+                        });
+                    }
+                }
+            });
+        }
         ArrayList<Parada> seleccionado = new ArrayList<>();
         Switch switchidavuelta = (Switch) findViewById(R.id.switchIdaVuelta);
         switch (seleccion) {
@@ -427,6 +484,10 @@ public class MainActivityLinea extends Activity {
     public void cerrar_itinerario(){
         FrameLayout superpuesto = (FrameLayout) findViewById(R.id.layoutsuperpuesto);
         superpuesto.setVisibility(View.INVISIBLE);
+    }
+    public void cerrar_noticias(){
+        FrameLayout superpuesto2 = (FrameLayout) findViewById(R.id.layoutsuperpuesto2);
+        superpuesto2.setVisibility(View.INVISIBLE);
     }
     private class DownloadImageTask extends AsyncTask<String[], Void, Bitmap>
     {

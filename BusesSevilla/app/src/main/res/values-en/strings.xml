@@ -4,7 +4,7 @@
     <string name="boton_consulta">Check</string>
     <string name="hora">" hour "</string>
     <string name="horas">" hours "</string>
-    <string name="ok">Ok</string>
+    <string name="ok">OK</string>
     <string name="error0">Connection failure</string>
     <string name="error1">Please try again later.</string>
     <string name="error2">Please check your Internet connection.</string>

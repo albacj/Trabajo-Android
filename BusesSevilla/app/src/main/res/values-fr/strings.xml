@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="pmr_no">Ne convient pas aux personnes à mobilité réduite.</string>
+    <string name="pmr_si">Convient aux personnes a mobilité réduite.</string>
+    <string name="info_tiempo2">:</string>
+    <string name="bienvenida">Bienvenu(e) à Buses Sevilla.\nIci, vous pouvez consulter les horaires de tous bus interurbains de la province de Séville.</string>
+    <string name="boton_consulta">Consulter</string>
+    <string name="cambio_idioma">Vous avez sélectionné français.</string>
+    <string name="enlace">Pour résoudre vos questions, appuyez sur ici.</string>
+    <string name="error0">Erreur de connexion</string>
+    <string name="ok">OK</string>
+    <string name="error1">Essayez à nouveau plus tard, s\'il vous plaît.</string>
+    <string name="error2">Vérifiez la disponibilité de votre connexion à internet, s\'il vous plaît.</string>
+    <string name="hora">" heure et "</string>
+    <string name="horas">" heures et "</string>
+    <string name="ida">ALLER</string>
+    <string name="info">Information de la ligne:</string>
+    <string name="info_tiempo">"Temps approximé de départ dès l\'arrêt "</string>
+    <string name="minuto">" minute"</string>
+    <string name="minutos">" minutes"</string>
+    <string name="vuelta">RETOUR</string>
+    <string name="seleccion_linea">Choisissez le numéro de bus que l\'emmènera à son destination.</string>
+    <string name="sin_navegador">Impossible de trouver de navigateur web pour cette demande.</string>
+    <string name="sin_estimaciones">Sans estimations.</string>
+    <string name="sin_noticias">Il n\'y a pas d\'information à montrer sur cette ligne.</string>
+    <string name="sin_servicios">Il n\'y a pas de service disponible</string>
+    <string name="seleccion_municipio">Sélectionnez où vous voulez aller:</string>
+</resources>

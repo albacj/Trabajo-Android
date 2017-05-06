@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="bienvenida">"Benvenuto/a sull'app di Bus Sevilla.\nQui lei potrà consultare gli orari di qualsiasi linea nella provincia di Siviglia."</string>
+    <string name="bienvenida">"Benvenuto/a sull'app di Buses Sevilla.\nQui lei potrà consultare gli orari di qualsiasi linea nella provincia di Siviglia."</string>
     <string name="boton_consulta">Consultare</string>
     <string name="enlace">Per ogni dubbio, prema qui.</string>
     <string name="seleccion_municipio">Selezioni dove vuole andare:</string>
